@@ -20,3 +20,8 @@ mod integration;
 #[cfg(all(test, feature = "testcontainer"))]
 #[path = "../../tests/proxy_env/mod.rs"]
 mod env_integration;
+
+// Group entry manager set/clear through the proxy; same setup as above.
+#[cfg(all(test, feature = "testcontainer"))]
+#[path = "../../tests/proxy_group_manager/mod.rs"]
+mod group_manager_integration;
