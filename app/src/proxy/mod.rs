@@ -13,3 +13,10 @@ pub mod handler;
 // only exist when that subsystem is compiled in.
 #[cfg(all(test, feature = "testcontainer"))]
 mod integration;
+
+// Tests that reach the run's Kanidm through KANIDM_URL (or the
+// container fallback); the file lives under tests/ with the other
+// test sources.
+#[cfg(all(test, feature = "testcontainer"))]
+#[path = "../../tests/proxy_env/mod.rs"]
+mod env_integration;

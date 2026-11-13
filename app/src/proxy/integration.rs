@@ -68,9 +68,19 @@ async fn container_router() -> (Router, TestcontainersHandle, DevCredentials) {
     (router, handle, credentials)
 }
 
+/// Router for tests that run against the run's own Kanidm when
+/// `KANIDM_URL` is set (CA from `KANIDM_CA_PATH`, passwords read from
+/// the files named by `KANIDM_ADMIN_PASSWORD_FILE` and
+/// `KANIDM_IDM_ADMIN_PASSWORD_FILE`), and against a fresh testcontainer
+/// otherwise. The handle is `None` when no container was started.
+pub(super) async fn env_or_container_router(
+) -> (Router, Option<TestcontainersHandle>, DevCredentials) {
+    todo!("read KANIDM_URL env settings, else fall back to container_router")
+}
+
 /// Log in through the real login handler and harvest the Set-Cookie
 /// header for subsequent proxied calls.
-async fn login(router: &Router, username: &str, password: &str) -> String {
+pub(super) async fn login(router: &Router, username: &str, password: &str) -> String {
     let response = router
         .clone()
         .oneshot(
@@ -96,7 +106,7 @@ async fn login(router: &Router, username: &str, password: &str) -> String {
 }
 
 /// Issue a proxied/auth request with the session cookie attached.
-fn request_with_cookie(method: &str, uri: &str, cookie: &str, body: Vec<u8>) -> Request<Body> {
+pub(super) fn request_with_cookie(method: &str, uri: &str, cookie: &str, body: Vec<u8>) -> Request<Body> {
     Request::builder()
         .method(method)
         .uri(uri)
@@ -107,7 +117,7 @@ fn request_with_cookie(method: &str, uri: &str, cookie: &str, body: Vec<u8>) -> 
 }
 
 /// Call the router and return (status, content-type, body bytes).
-async fn call(
+pub(super) async fn call(
     router: &Router,
     request: Request<Body>,
 ) -> (StatusCode, Option<String>, Vec<u8>) {
@@ -129,7 +139,7 @@ async fn call(
 }
 
 /// Call and parse the body as JSON.
-async fn call_json(router: &Router, request: Request<Body>) -> (StatusCode, Value) {
+pub(super) async fn call_json(router: &Router, request: Request<Body>) -> (StatusCode, Value) {
     let (status, _, body) = call(router, request).await;
     let value = serde_json::from_slice(&body).unwrap_or_else(|error| {
         panic!("response body is not JSON ({error}): {}", String::from_utf8_lossy(&body))
