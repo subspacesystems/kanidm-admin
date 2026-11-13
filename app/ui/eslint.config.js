@@ -16,6 +16,7 @@ export default [
       '*.local',
       '.vscode/*',
       '.env',
+      'tests',
       'bun.lock',
       '**/*.min.js',
       '**/*.min.css',
