@@ -73,6 +73,9 @@ async fn container_router() -> (Router, TestcontainersHandle, DevCredentials) {
 /// the files named by `KANIDM_ADMIN_PASSWORD_FILE` and
 /// `KANIDM_IDM_ADMIN_PASSWORD_FILE`), and against a fresh testcontainer
 /// otherwise. The handle is `None` when no container was started.
+// Stub awaiting the `test-env-kanidm` task's test module; nothing in this
+// branch calls it yet, so mark the (otherwise dead) definition explicitly.
+#[allow(dead_code)]
 pub(super) async fn env_or_container_router(
 ) -> (Router, Option<TestcontainersHandle>, DevCredentials) {
     todo!("read KANIDM_URL env settings, else fall back to container_router")
