@@ -19,6 +19,7 @@ use tower::ServiceExt;
 
 use crate::auth;
 use crate::proxy;
+use crate::settings::kanidm::KanidmSettings;
 use crate::settings::testcontainer::TestcontainerSettings;
 use crate::testcontainer::{
     parse_recover_account_password, start_containers, DevCredentials, TestcontainersHandle,
@@ -75,7 +76,51 @@ async fn container_router() -> (Router, TestcontainersHandle, DevCredentials) {
 /// otherwise. The handle is `None` when no container was started.
 pub(super) async fn env_or_container_router(
 ) -> (Router, Option<TestcontainersHandle>, DevCredentials) {
-    todo!("read KANIDM_URL env settings, else fall back to container_router")
+    match std::env::var("KANIDM_URL") {
+        Ok(url) => {
+            // Required in env mode: the CA file the server certificate is
+            // verified against. Absent, the client could not verify real
+            // TLS, so refuse to start (the spec forbids disabling
+            // verification).
+            let ca_path = match std::env::var("KANIDM_CA_PATH") {
+                Ok(ca_path) if !ca_path.is_empty() => ca_path,
+                _ => {
+                    panic!("KANIDM_URL is set but KANIDM_CA_PATH is not; the run must provide a CA to verify against")
+                }
+            };
+
+            let settings = KanidmSettings {
+                url,
+                ca_path: Some(ca_path),
+                verify_ca: true,
+            };
+            let credentials = DevCredentials {
+                admin_password: read_password_file("KANIDM_ADMIN_PASSWORD_FILE"),
+                idm_admin_password: read_password_file("KANIDM_IDM_ADMIN_PASSWORD_FILE"),
+            };
+
+            let state =
+                auth::app_state_from_settings(&settings).expect("app state from env settings");
+            let router = auth::handlers::routes()
+                .merge(proxy::handler::routes())
+                .with_state(state);
+            (router, None, credentials)
+        }
+        Err(_) => {
+            let (router, handle, credentials) = container_router().await;
+            (router, Some(handle), credentials)
+        }
+    }
+}
+
+/// Read a password file named by the named env var (trimmed of the
+/// trailing newline). Panics naming only the variable (never the
+/// password) when the var or file is missing.
+fn read_password_file(var: &str) -> String {
+    let path =
+        std::env::var(var).unwrap_or_else(|_| panic!("{var} is not set (KANIDM_URL mode)"));
+    let contents = std::fs::read_to_string(&path).unwrap_or_else(|_| panic!("{var} file not readable: {path}"));
+    contents.trim_end_matches('\n').to_string()
 }
 
 /// Log in through the real login handler and harvest the Set-Cookie
