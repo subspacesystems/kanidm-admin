@@ -19,6 +19,9 @@ fn main() {
     // builds (Docker) still get the compile-time client version.
     emit_kanidm_client_version(&manifest_dir);
 
+    // Before the skip early-return too: test builds need it either way.
+    emit_test_module_cfgs(&manifest_dir);
+
     // Always ensure ui/dist exists so the rust-embed derive in
     // frontend_assets.rs compiles - even when the build is skipped
     // (APP_SKIP_FRONTEND_BUILD=1) or bun is unavailable. An empty dist
@@ -41,6 +44,25 @@ fn manifest_dir() -> PathBuf {
 fn ensure_ui_dist_exists(ui_dir: &Path) {
     std::fs::create_dir_all(ui_dir.join("dist"))
         .unwrap_or_else(|e| panic!("failed to create ui/dist: {e}"));
+}
+
+/// Emit `fork_test = "<dir>"` for every `tests/<dir>/mod.rs`, so src can
+/// include a test module (`#[path]`) only once its file exists. The
+/// tests directory is watched, so adding a module re-runs this script.
+fn emit_test_module_cfgs(manifest_dir: &Path) {
+    println!("cargo::rustc-check-cfg=cfg(fork_test, values(any()))");
+    emit_rerun_if_changed(manifest_dir, "tests");
+    let Ok(entries) = std::fs::read_dir(manifest_dir.join("tests")) else {
+        return;
+    };
+    for entry in entries.flatten() {
+        if !entry.path().join("mod.rs").is_file() {
+            continue;
+        }
+        if let Some(name) = entry.file_name().to_str() {
+            println!("cargo::rustc-cfg=fork_test=\"{name}\"");
+        }
+    }
 }
 
 fn skip_frontend_build() -> bool {
