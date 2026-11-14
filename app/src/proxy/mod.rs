@@ -57,3 +57,8 @@ mod sa_reset_gidnumber_integration;
 #[cfg(all(test, feature = "testcontainer", fork_test = "proxy_schema_attributes"))]
 #[path = "../../tests/proxy_schema_attributes/mod.rs"]
 mod schema_attributes_integration;
+
+// Schema class list and get through the proxy; same setup as above.
+#[cfg(all(test, feature = "testcontainer", fork_test = "proxy_schema_classes"))]
+#[path = "../../tests/proxy_schema_classes/mod.rs"]
+mod schema_classes_integration;
