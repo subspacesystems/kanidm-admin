@@ -2889,6 +2889,18 @@
   <source>Reset the GID number? Kanidm will generate a new one from the group, and anything using the old number stops matching.</source>
   <target state="needs-review-translation">重置 GID 号？Kanidm 将根据该组生成新的 GID 号，所有使用旧号码的内容将不再匹配。</target>
 </trans-unit>
+<trans-unit id="s51a6024805acd2b8">
+  <source>Softlock cleared.</source>
+  <target state="needs-review-translation">已清除软锁定。</target>
+</trans-unit>
+<trans-unit id="sf61181ee66a36073">
+  <source>Failed to clear softlock.</source>
+  <target state="needs-review-translation">清除软锁定失败。</target>
+</trans-unit>
+<trans-unit id="s770b7ab6c0f238fd">
+  <source>Clear softlock</source>
+  <target state="needs-review-translation">清除软锁定</target>
+</trans-unit>
 </body>
 </file>
 </xliff>
