@@ -28,6 +28,10 @@ export default defineConfig({
           // The default `development` env enables the Docker testcontainer
           // chain; the e2e app must talk to the real Kanidm above instead.
           APP_TESTCONTAINER__ENABLED: 'false',
+          // `development` also spawns `bun watch`, whose initial rebuild
+          // empties and rewrites `dist/` while tests are running. The
+          // e2e run serves the `dist/` built beforehand, so no watcher.
+          APP_FRONTEND__WATCH: 'false',
           ...(kanidmUrl ? { APP_KANIDM__URL: kanidmUrl } : {}),
           ...(kanidmCaPath ? { APP_KANIDM__CA_PATH: kanidmCaPath } : {}),
         },
