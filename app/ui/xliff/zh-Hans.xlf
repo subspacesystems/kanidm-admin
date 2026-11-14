@@ -2889,6 +2889,10 @@
   <source>Reset the GID number? Kanidm will generate a new one from the account, and anything using the old number stops matching.</source>
   <target state="needs-review-translation">重置 GID 号？Kanidm 将根据账户生成一个新的 GID 号，任何使用旧号码的内容将不再匹配。</target>
 </trans-unit>
+<trans-unit id="s2aa0296b960c7add">
+  <source>Reset the GID number? Kanidm will generate a new one from the group, and anything using the old number stops matching.</source>
+  <target state="needs-review-translation">重置 GID 号？Kanidm 将根据该组生成新的 GID 号，所有使用旧号码的内容将不再匹配。</target>
+</trans-unit>
 </body>
 </file>
 </xliff>

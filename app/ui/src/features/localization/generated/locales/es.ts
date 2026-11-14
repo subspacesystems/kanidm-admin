@@ -117,6 +117,7 @@
 's295e048b68b257dc': `Versión incompatible`,
 's2a105da7c8461df1': `Estrategia de unión actualizada.`,
 's2a15f95845e31799': `Copie este token ahora: NO se volverá a mostrar.`,
+'s2aa0296b960c7add': `¿Restablecer el número GID? Kanidm generará uno nuevo a partir del grupo, y todo lo que use el número anterior dejará de coincidir.`,
 's2bb906f97ec08bb0': `Este grupo no es un grupo de política de cuenta.`,
 's2ceb11be2290bb1b': `Cancelar`,
 's2d010c845f7f29ae': `Variante activa`,
