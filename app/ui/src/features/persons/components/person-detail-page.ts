@@ -154,15 +154,19 @@ export class PersonDetailPage extends LitElement {
                       ? html`<p class="muted mono">${this.person.uuid}</p>`
                       : nothing}
                   </div>
-                  <ui-button
-                    class="btn-delete"
-                    variant="danger-ghost"
-                    icon="trash"
-                    ?disabled=${this.deleteBusy}
-                    @click=${() => (this.deleteOpen = true)}
-                  >
-                    ${msg('Delete')}
-                  </ui-button>
+                  ${this.activeTab === 'credentials'
+                    ? nothing
+                    : html`
+                        <ui-button
+                          class="btn-delete"
+                          variant="danger-ghost"
+                          icon="trash"
+                          ?disabled=${this.deleteBusy}
+                          @click=${() => (this.deleteOpen = true)}
+                        >
+                          ${msg('Delete')}
+                        </ui-button>
+                      `}
                 </header>
                 <tab-bar
                   .tabs=${this.tabs}
