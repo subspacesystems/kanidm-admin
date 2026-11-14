@@ -8,6 +8,7 @@ pub mod bulk;
 pub mod error_map;
 pub mod forwarder;
 pub mod handler;
+pub mod schema_fallback;
 
 // The integration tests drive the real testcontainer chain, so they
 // only exist when that subsystem is compiled in.
@@ -72,3 +73,8 @@ mod person_app_passwords_integration;
 #[cfg(all(test, feature = "testcontainer", fork_test = "proxy_person_app_passwords_create"))]
 #[path = "../../tests/proxy_person_app_passwords_create/mod.rs"]
 mod person_app_passwords_create_integration;
+
+// Person application-password delete through the proxy; same setup as above.
+#[cfg(all(test, feature = "testcontainer", fork_test = "proxy_person_app_passwords_delete"))]
+#[path = "../../tests/proxy_person_app_passwords_delete/mod.rs"]
+mod person_app_passwords_delete_integration;

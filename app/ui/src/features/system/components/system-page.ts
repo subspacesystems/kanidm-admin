@@ -268,6 +268,16 @@ export class SystemPage extends LitElement {
         </ui-card>
 
         <ui-card>
+          <h2>${msg('Schema')}</h2>
+          <p class="description">
+            ${msg("Browse the attribute types defined in Kanidm's schema.")}
+          </p>
+          <a class="card-link" href="/admin/system/attributes">
+            ${msg('Schema attributes')}
+          </a>
+        </ui-card>
+
+        <ui-card>
           <h2>${msg('Password badlist')}</h2>
           <p class="description">
             ${msg(
