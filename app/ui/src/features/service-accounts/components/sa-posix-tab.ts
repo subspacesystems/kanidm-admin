@@ -14,6 +14,7 @@ import { authService } from '@/features/auth';
 import { notificationService } from '@/features/notifications';
 import { ApiError } from '@/shared/services/http-client';
 import '@/shared/components/ui-button';
+import '@/shared/components/confirm-dialog';
 import { serviceAccountService } from '../services/service-account.service';
 import type { UnixUserTokenView } from '../types/service-account.types';
 
@@ -27,6 +28,8 @@ export class SaPosixTab extends LitElement {
   /** null = still loading; false = confirmed not POSIX-enabled. */
   @state() private posixState: 'loading' | 'enabled' | 'disabled' = 'loading';
   @state() private saving = false;
+  @state() private resetting = false;
+  @state() private resetOpen = false;
   @state() private settingPassword = false;
   @state() private gidnumber = '';
   @state() private shell = '';
@@ -80,6 +83,22 @@ export class SaPosixTab extends LitElement {
       notificationService.error(msg('Failed to save POSIX attributes.'));
     } finally {
       this.saving = false;
+    }
+  }
+
+  private async resetGidnumber(): Promise<void> {
+    if (this.resetting) return;
+    this.resetting = true;
+    try {
+      await authService.withStepUp(() =>
+        serviceAccountService.resetGidnumber(this.id)
+      );
+      notificationService.success(msg('GID number reset.'));
+      await this.load();
+    } catch {
+      notificationService.error(msg('Failed to reset the GID number.'));
+    } finally {
+      this.resetting = false;
     }
   }
 
@@ -182,8 +201,33 @@ export class SaPosixTab extends LitElement {
             </p>`
           : nothing}
         ${this.renderPosixForm()}
+        <div class="actions">
+          <ui-button
+            variant="secondary"
+            ?disabled=${this.saving || this.resetting}
+            @click=${() => (this.resetOpen = true)}
+          >
+            ${msg('Reset GID number')}
+          </ui-button>
+        </div>
       </section>
       ${this.renderPasswordForm()}
+      ${this.resetOpen
+        ? html`<confirm-dialog
+            open
+            danger
+            .busy=${this.resetting}
+            confirmLabel=${msg('Reset')}
+            message=${msg(
+              'Reset the GID number? Kanidm will generate a new one from the account, and anything using the old number stops matching.'
+            )}
+            @confirm=${() => {
+              this.resetOpen = false;
+              void this.resetGidnumber();
+            }}
+            @cancel=${() => (this.resetOpen = false)}
+          ></confirm-dialog>`
+        : nothing}
     `;
   }
 
@@ -204,6 +248,11 @@ export class SaPosixTab extends LitElement {
       margin: 0 0 12px;
       font-size: 14px;
       color: var(--theme-color-text-muted);
+    }
+    .actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 8px;
     }
   `;
 }

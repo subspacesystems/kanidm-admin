@@ -129,6 +129,15 @@ class ServiceAccountService {
     );
   }
 
+  /**
+   * Reset the gidnumber (vendor idm_service_account_purge_attr with
+   * gidnumber; CLI: kanidm service-account posix reset-gidnumber).
+   * Kanidm generates a new one from the account's uuid.
+   */
+  async resetGidnumber(id: string): Promise<void> {
+    await this.purgeAttr(id, 'gidnumber');
+  }
+
   /** Credential status (vendor idm_service_account_get_credential_status). */
   async credentialStatus(id: string): Promise<CredentialStatusView> {
     return apiFetch<CredentialStatusView>(
