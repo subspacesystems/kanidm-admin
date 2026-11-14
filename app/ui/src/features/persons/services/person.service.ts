@@ -104,6 +104,18 @@ class PersonService {
     );
   }
 
+  /**
+   * Clear the account's credential softlock (CLI
+   * `kanidm person credential softlock-reset <id>`): writes the current
+   * time to the account_softlock_expire attribute, which makes Kanidm
+   * drop every softlock that began before it.
+   */
+  async resetSoftlock(id: string): Promise<void> {
+    await this.setAttr(id, 'account_softlock_expire', [
+      new Date().toISOString(),
+    ]);
+  }
+
   /** Credential status (vendor idm_person_account_get_credential_status). */
   async credentialStatus(id: string): Promise<CredentialStatusView> {
     return apiFetch<CredentialStatusView>(
@@ -261,6 +273,16 @@ class PersonService {
       method: 'POST',
       body: JSON.stringify({ shell, gidnumber }),
     });
+  }
+
+  /** Reset the gidnumber so Kanidm generates a new one (vendor
+   * idm_person_account_purge_attr with gidnumber; CLI
+   * `kanidm person posix reset-gidnumber`). */
+  async resetGidnumber(id: string): Promise<void> {
+    await apiFetch<void>(
+      `${BASE}/person/${encodeURIComponent(id)}/_attr/gidnumber`,
+      { method: 'DELETE' }
+    );
   }
 
   /** POSIX password (vendor idm_person_account_unix_cred_put: PUT
