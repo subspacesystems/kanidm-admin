@@ -2833,6 +2833,42 @@
   <source>Revoke this domain key? All sessions signed with it are invalidated and cannot be restored.</source>
   <target state="needs-review-translation">吊销此域密钥？使用它签名的所有会话都将失效且无法恢复。</target>
 </trans-unit>
+<trans-unit id="s7939798cb1d7396b">
+  <source>Entry manager updated.</source>
+  <target state="needs-review-translation">条目管理者已更新。</target>
+</trans-unit>
+<trans-unit id="sab59abc0a02aa2fc">
+  <source>Failed to set entry manager.</source>
+  <target state="needs-review-translation">设置条目管理者失败。</target>
+</trans-unit>
+<trans-unit id="s5584f6cad72e3b66">
+  <source>Entry manager cleared.</source>
+  <target state="needs-review-translation">条目管理者已清除。</target>
+</trans-unit>
+<trans-unit id="sb35ad6390668e0b7">
+  <source>Failed to clear entry manager.</source>
+  <target state="needs-review-translation">清除条目管理者失败。</target>
+</trans-unit>
+<trans-unit id="se2804ce9404d76e8">
+  <source>Entry manager</source>
+  <target state="needs-review-translation">条目管理者</target>
+</trans-unit>
+<trans-unit id="s41aac5477d636e39">
+  <source>Current entry manager</source>
+  <target state="needs-review-translation">当前条目管理者</target>
+</trans-unit>
+<trans-unit id="s669b18c6d2d9c95b">
+  <source>None</source>
+  <target state="needs-review-translation">无</target>
+</trans-unit>
+<trans-unit id="s1e30088d1a06035c">
+  <source>Set entry manager</source>
+  <target state="needs-review-translation">设置条目管理者</target>
+</trans-unit>
+<trans-unit id="sd479fa35a6ca7e21">
+  <source>Clear entry manager</source>
+  <target state="needs-review-translation">清除条目管理者</target>
+</trans-unit>
 </body>
 </file>
 </xliff>
