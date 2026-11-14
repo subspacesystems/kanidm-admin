@@ -39,7 +39,8 @@ export class DataTable extends LitElement {
 
   @state() private searchTerm = '';
   @state() private page = 1;
-  @state() private pageSize = 10;
+  /** Rows per page; callers showing long lists can raise it. */
+  @property({ type: Number }) pageSize = 10;
   /** Ids (row.id) of selected rows; survives search and paging. */
   @state() private selected = new Set<string>();
 
