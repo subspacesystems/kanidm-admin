@@ -19,6 +19,7 @@ export default [
       'bun.lock',
       '**/*.min.js',
       '**/*.min.css',
+      '**/*.e2e.ts',
       'src/features/localization/generated/',
     ],
   },
