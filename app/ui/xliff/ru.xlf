@@ -2977,6 +2977,10 @@
   <source>Delete application password <ph id="0">${password.label}</ph></source>
   <target state="needs-review-translation">Удалить пароль приложения <ph id="0">${password.label}</ph></target>
 </trans-unit>
+<trans-unit id="s30844575d5effbe3">
+  <source>Delete person</source>
+  <target state="needs-review-translation">Удалить пользователя</target>
+</trans-unit>
 </body>
 </file>
 </xliff>

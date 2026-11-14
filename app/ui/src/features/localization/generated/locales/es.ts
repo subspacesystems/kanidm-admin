@@ -134,6 +134,7 @@
 's2f96c13ece2cac42': `Copiar imagen del QR`,
 's30493a6cb695008e': `Error al cargar la configuración del dominio`,
 's30677b9ca385caa5': `El acceso elevado requiere volver a autenticarse`,
+'s30844575d5effbe3': `Eliminar persona`,
 's30c34c6981441d19': `¿Eliminar la imagen subida? Se restaurará la predeterminada.`,
 's313a62cbdc561b95': `Error al revocar la sesión.`,
 's319540adbb6afa91': `Error al eliminar la imagen.`,
