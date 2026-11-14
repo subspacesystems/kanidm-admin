@@ -36,13 +36,14 @@ each password: its label and the application it belongs to. Create and delete ar
 - **UI** (`person-credentials-tab.ts`): new `@state() private appPasswords: PersonApplicationPassword[]`, loaded in
   `load()` beside the credential status (a failure to load them must not blank the tab: log nothing, show the empty
   state). Render a section **below the credentials list**, inside the tab's `<section class="credentials">`:
-  a heading `msg('Application passwords')` (an `h3`, styled like the tab's other headings or plain; add styles to
+  a wrapper `<div class="app-passwords">` (the e2e test finds the section by that class) holding a heading
+  `msg('Application passwords')` (an `h3`, styled like the tab's other headings or plain; add styles to
   `person-credentials-tab.styles.ts` only if needed) and either
   - `ui-empty-state` (icon `key`, as the credentials list uses) with `msg('No application passwords.')`, or
   - a list (reuse the `cred-list` / row look of `renderCredRow`) with one row per password: the label, then the
     application name (`msg(str`Application: ${name}`)`-style string is fine; keep it one localized string with a
     placeholder), with the password id as a `title` attribute. When the name equals the id, show the id.
-  No buttons in the section.
+  No buttons in the section. The page header's person **Delete** button stays as it is on every tab.
 - Strings: every new string uses `msg()` and goes into all three XLIFF files (`app/ui/xliff/` ru, es, zh-Hans) through
   `bun i18n:extract` from `app/ui`, new ids translated with `state="needs-review-translation"`. Find the new ids with
   grep, do not read the XLIFF files whole. Commit regenerated `generated/locales/*.ts` too, as other tasks do.
@@ -57,7 +58,7 @@ each password: its label and the application it belongs to. Create and delete ar
 - `app/ui/tests/person-app-passwords-list.e2e.ts`: a new person's Credentials tab shows the heading "Application
   passwords" and "No application passwords."; with the two SCIM reads answered by fixtures (a person entry with two
   `application_password` values, an application list naming one of them) it shows both labels, the display name for
-  the known application and the id for the unknown one, and no delete or create-application button. Runs with
+  the known application and the id for the unknown one, and no button inside `.app-passwords`. Runs with
   `bun run test:e2e`.
 - `bunx --bun tsc --noEmit`, lint, build and `bun test` stay green; Rust tests stay green.
 

@@ -115,9 +115,12 @@ test.describe('person application passwords list', () => {
     // An application that is not in the list shows its id instead.
     await expect(page.getByText(unknownApp)).toBeVisible();
     await expect(page.getByText('No application passwords.')).toHaveCount(0);
-    // Read-only: no delete or create action yet.
+    // Read-only: no delete or create action in the section yet. (The
+    // page header's own Delete button removes the person, not a password.)
+    const section = page.locator('.app-passwords');
     await expect(
-      page.locator('.app-passwords').getByRole('button')
-    ).toHaveCount(0);
+      section.getByRole('heading', { name: 'Application passwords' })
+    ).toBeVisible();
+    await expect(section.getByRole('button')).toHaveCount(0);
   });
 });
