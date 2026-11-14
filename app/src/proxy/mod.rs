@@ -67,3 +67,8 @@ mod schema_classes_integration;
 #[cfg(all(test, feature = "testcontainer", fork_test = "proxy_person_app_passwords"))]
 #[path = "../../tests/proxy_person_app_passwords/mod.rs"]
 mod person_app_passwords_integration;
+
+// Person application-password create through the proxy; same setup as above.
+#[cfg(all(test, feature = "testcontainer", fork_test = "proxy_person_app_passwords_create"))]
+#[path = "../../tests/proxy_person_app_passwords_create/mod.rs"]
+mod person_app_passwords_create_integration;
