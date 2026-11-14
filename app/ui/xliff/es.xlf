@@ -2813,6 +2813,26 @@
   <source>Go to home page</source>
   <target>Ir a la página principal</target>
 </trans-unit>
+<trans-unit id="s2d49bf3fda05b852">
+  <source>Domain key revoked.</source>
+  <target state="needs-review-translation">Clave del dominio revocada.</target>
+</trans-unit>
+<trans-unit id="saf8e35741b8d52c9">
+  <source>Failed to revoke the domain key.</source>
+  <target state="needs-review-translation">No se pudo revocar la clave del dominio.</target>
+</trans-unit>
+<trans-unit id="sc59e9199885c4606">
+  <source>Revoke domain key</source>
+  <target state="needs-review-translation">Revocar clave del dominio</target>
+</trans-unit>
+<trans-unit id="s513b6f6b5a5f3157">
+  <source>Revokes a domain key by its id. Every session signed with it is invalidated, so all users must sign in again.</source>
+  <target state="needs-review-translation">Revoca una clave del dominio por su id. Todas las sesiones firmadas con ella se invalidan, por lo que todos los usuarios deben iniciar sesión de nuevo.</target>
+</trans-unit>
+<trans-unit id="s7e136fd89fb9c014">
+  <source>Revoke this domain key? All sessions signed with it are invalidated and cannot be restored.</source>
+  <target state="needs-review-translation">¿Revocar esta clave del dominio? Todas las sesiones firmadas con ella se invalidan y no se pueden restaurar.</target>
+</trans-unit>
 </body>
 </file>
 </xliff>

@@ -2813,6 +2813,26 @@
   <source>Go to home page</source>
   <target>转到主页</target>
 </trans-unit>
+<trans-unit id="s2d49bf3fda05b852">
+  <source>Domain key revoked.</source>
+  <target state="needs-review-translation">域密钥已吊销。</target>
+</trans-unit>
+<trans-unit id="saf8e35741b8d52c9">
+  <source>Failed to revoke the domain key.</source>
+  <target state="needs-review-translation">吊销域密钥失败。</target>
+</trans-unit>
+<trans-unit id="sc59e9199885c4606">
+  <source>Revoke domain key</source>
+  <target state="needs-review-translation">吊销域密钥</target>
+</trans-unit>
+<trans-unit id="s513b6f6b5a5f3157">
+  <source>Revokes a domain key by its id. Every session signed with it is invalidated, so all users must sign in again.</source>
+  <target state="needs-review-translation">按 ID 吊销域密钥。使用该密钥签名的所有会话都将失效，因此所有用户都必须重新登录。</target>
+</trans-unit>
+<trans-unit id="s7e136fd89fb9c014">
+  <source>Revoke this domain key? All sessions signed with it are invalidated and cannot be restored.</source>
+  <target state="needs-review-translation">吊销此域密钥？使用它签名的所有会话都将失效且无法恢复。</target>
+</trans-unit>
 </body>
 </file>
 </xliff>
