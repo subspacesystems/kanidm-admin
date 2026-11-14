@@ -35,8 +35,20 @@ export class ModalDialog extends LitElement {
   }
 
   protected updated(changed: Map<string, unknown>): void {
-    if (changed.has('open')) {
+    if (changed.has('open') || changed.has('heading')) {
       document.body.style.overflow = this.open ? 'hidden' : '';
+      // Dialog semantics belong on the host so slotted content (the form
+      // and its footer buttons) stays inside it in the accessibility tree
+      // and for locators chaining through the dialog.
+      if (this.open) {
+        this.setAttribute('role', 'dialog');
+        this.setAttribute('aria-modal', 'true');
+        this.setAttribute('aria-label', this.heading);
+      } else {
+        this.removeAttribute('role');
+        this.removeAttribute('aria-modal');
+        this.removeAttribute('aria-label');
+      }
     }
   }
 
@@ -72,12 +84,7 @@ export class ModalDialog extends LitElement {
         @click=${this.handleOverlayClick}
         role="presentation"
       >
-        <div
-          class="card"
-          role="dialog"
-          aria-modal="true"
-          aria-label=${this.heading}
-        >
+        <div class="card">
           <div class="card-header">
             <span class="card-title">${this.heading}</span>
             <button
