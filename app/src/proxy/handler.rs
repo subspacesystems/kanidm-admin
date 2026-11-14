@@ -84,7 +84,7 @@ pub async fn proxy(State(state): State<AppState>, request: Request) -> Response 
 
     // 4. Buffer the body (DELETE-with-body must survive: system badlist
     //    removal sends a JSON array in a DELETE).
-    let body = match to_bytes(body, MAX_BODY_BYTES).await {
+    let mut body = match to_bytes(body, MAX_BODY_BYTES).await {
         Ok(bytes) => bytes,
         Err(_) => {
             // Body could not be buffered: in practice this is the
@@ -100,18 +100,23 @@ pub async fn proxy(State(state): State<AppState>, request: Request) -> Response 
         }
     };
 
-    // Kanidm's purge routes parse a JSON body even on DELETE. A bodyless
-    // DELETE (the console's attribute purge) sends [] as the client does.
-    let (body, content_type) = if method == Method::DELETE && body.is_empty() {
-        (Bytes::from_static(b"[]"), Some("application/json".to_string()))
-    } else {
-        let content_type = parts
-            .headers
-            .get(header::CONTENT_TYPE)
-            .and_then(|v| v.to_str().ok())
-            .map(str::to_string);
-        (body, content_type)
-    };
+    let content_type = parts
+        .headers
+        .get(header::CONTENT_TYPE)
+        .and_then(|v| v.to_str().ok())
+        .map(str::to_string);
+
+    // Kanidm's attribute purge routes parse a JSON body even on DELETE.
+    // An empty body with a JSON content type fails before the purge
+    // handler; send the empty array the vendored client uses.
+    if method == Method::DELETE
+        && body.is_empty()
+        && content_type
+            .as_deref()
+            .is_some_and(|value| value.starts_with("application/json"))
+    {
+        body = Bytes::from_static(b"[]");
+    }
 
     // 5. Forward.
     let forward_request = ForwardRequest {

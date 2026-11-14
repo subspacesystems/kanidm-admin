@@ -84,6 +84,22 @@ class GroupService {
     );
   }
 
+  /** Set entry manager (PUT _attr/entry_managed_by). */
+  async setEntryManager(id: string, manager: string): Promise<void> {
+    await apiFetch<void>(
+      `${BASE}/group/${encodeURIComponent(id)}/_attr/entry_managed_by`,
+      { method: 'PUT', body: JSON.stringify([manager]) }
+    );
+  }
+
+  /** Clear entry manager (DELETE _attr/entry_managed_by, purge). */
+  async clearEntryManager(id: string): Promise<void> {
+    await apiFetch<void>(
+      `${BASE}/group/${encodeURIComponent(id)}/_attr/entry_managed_by`,
+      { method: 'DELETE' }
+    );
+  }
+
   /** Delete (vendor idm_group_delete: DELETE /v1/group/{id}). */
   async remove(id: string): Promise<void> {
     await apiFetch<void>(`${BASE}/group/${encodeURIComponent(id)}`, {
