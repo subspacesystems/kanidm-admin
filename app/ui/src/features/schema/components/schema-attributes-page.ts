@@ -21,7 +21,7 @@ import { schemaAttributesPageStyles } from './schema-attributes-page.styles';
 @customElement('schema-attributes-page')
 @localized()
 export class SchemaAttributesPage extends LitElement {
-  @state() private attributes: SchemaAttribute[] = [];
+  @state() private rows: SchemaAttribute[] = [];
   @state() private loading = true;
 
   connectedCallback(): void {
@@ -32,7 +32,7 @@ export class SchemaAttributesPage extends LitElement {
   private async load(): Promise<void> {
     this.loading = true;
     try {
-      this.attributes = await schemaService.attributeList();
+      this.rows = await schemaService.attributeList();
     } catch (error) {
       this.toastError(error, msg('Failed to load schema attributes'));
     } finally {
@@ -62,7 +62,8 @@ export class SchemaAttributesPage extends LitElement {
       {
         key: 'unique',
         header: msg('Unique'),
-        render: (row) => (row.unique ? html`${msg('Yes')}` : html`${msg('No')}`),
+        render: (row) =>
+          row.unique ? html`${msg('Yes')}` : html`${msg('No')}`,
       },
       { key: 'description', header: msg('Description') },
     ];
@@ -82,9 +83,10 @@ export class SchemaAttributesPage extends LitElement {
         <ui-card>
           <data-table
             .columns=${this.columns}
-            .rows=${this.attributes}
+            .rows=${this.rows}
             .loading=${this.loading}
             .searchable=${true}
+            .pageSize=${200}
             .searchPlaceholder=${msg('Filter attributes...')}
             .emptyMessage=${msg('No attribute types found.')}
           ></data-table>
