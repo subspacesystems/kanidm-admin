@@ -72,3 +72,8 @@ mod person_app_passwords_integration;
 #[cfg(all(test, feature = "testcontainer", fork_test = "proxy_person_app_passwords_create"))]
 #[path = "../../tests/proxy_person_app_passwords_create/mod.rs"]
 mod person_app_passwords_create_integration;
+
+// Person application-password delete through the proxy; same setup as above.
+#[cfg(all(test, feature = "testcontainer", fork_test = "proxy_person_app_passwords_delete"))]
+#[path = "../../tests/proxy_person_app_passwords_delete/mod.rs"]
+mod person_app_passwords_delete_integration;
