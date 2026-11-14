@@ -1,0 +1,716 @@
+[
+  {
+    "attrs": {
+      "classname": [
+        "object"
+      ],
+      "description": [
+        "The base class shared by every entry in Kanidm."
+      ],
+      "systemmust": [
+        "class",
+        "uuid"
+      ]
+    }
+  },
+  {
+    "attrs": {
+      "classname": [
+        "account"
+      ],
+      "description": [
+        "An entry that can authenticate to Kanidm."
+      ],
+      "systemmust": [
+        "name"
+      ],
+      "systemmay": [
+        "displayname",
+        "legalname",
+        "mail"
+      ],
+      "systemsupplements": [
+        "object"
+      ]
+    }
+  },
+  {
+    "attrs": {
+      "classname": [
+        "person"
+      ],
+      "description": [
+        "A person account, able to sign in and hold credentials."
+      ],
+      "systemmust": [
+        "displayname",
+        "name"
+      ],
+      "systemmay": [
+        "mail",
+        "legalname",
+        "preferred_username",
+        "ssh_publickey",
+        "radius_secret"
+      ],
+      "systemsupplements": [
+        "account",
+        "posixaccount"
+      ],
+      "systemexcludes": [
+        "service_account",
+        "group"
+      ]
+    }
+  },
+  {
+    "attrs": {
+      "classname": [
+        "group"
+      ],
+      "description": [
+        "A group of entries, used for access control and membership."
+      ],
+      "systemmust": [
+        "name"
+      ],
+      "systemmay": [
+        "description",
+        "member",
+        "mail"
+      ],
+      "systemsupplements": [
+        "object"
+      ],
+      "systemexcludes": [
+        "service_account"
+      ]
+    }
+  },
+  {
+    "attrs": {
+      "classname": [
+        "service_account"
+      ],
+      "description": [
+        "A non-person account used by an application or service."
+      ],
+      "systemmust": [
+        "name"
+      ],
+      "systemmay": [
+        "description",
+        "displayname",
+        "mail",
+        "entry_managed_by"
+      ],
+      "systemsupplements": [
+        "account"
+      ],
+      "systemexcludes": [
+        "person",
+        "group",
+        "posixaccount"
+      ]
+    }
+  },
+  {
+    "attrs": {
+      "classname": [
+        "posixaccount"
+      ],
+      "description": [
+        "POSIX account attributes such as a login shell and home directory."
+      ],
+      "systemmay": [
+        "loginshell",
+        "homedirectory",
+        "gecos",
+        "gidnumber"
+      ],
+      "systemsupplements": [
+        "account"
+      ]
+    }
+  },
+  {
+    "attrs": {
+      "classname": [
+        "posixgroup"
+      ],
+      "description": [
+        "POSIX group attributes such as a numeric group id."
+      ],
+      "systemmay": [
+        "gidnumber"
+      ],
+      "systemsupplements": [
+        "group",
+        "object"
+      ]
+    }
+  },
+  {
+    "attrs": {
+      "classname": [
+        "domain"
+      ],
+      "description": [
+        "The Kanidm domain configuration entry."
+      ],
+      "systemmay": [
+        "domain_display_name",
+        "domain_ssid",
+        "domain_ldap_basedn",
+        "domain_token_key"
+      ]
+    }
+  },
+  {
+    "attrs": {
+      "classname": [
+        "domain_info"
+      ],
+      "description": [
+        "Read-only information about the domain."
+      ],
+      "systemmay": [
+        "domain_display_name",
+        "domain_ssid",
+        "domain_ldap_basedn",
+        "version"
+      ]
+    }
+  },
+  {
+    "attrs": {
+      "classname": [
+        "system"
+      ],
+      "description": [
+        "The system configuration entry."
+      ],
+      "systemmay": [
+        "badlist_password",
+        "denied_name",
+        "credential_type_minimum"
+      ]
+    }
+  },
+  {
+    "attrs": {
+      "classname": [
+        "system_info"
+      ],
+      "description": [
+        "Read-only information about the Kanidm server."
+      ],
+      "systemmay": [
+        "version",
+        "domain_display_name"
+      ]
+    }
+  },
+  {
+    "attrs": {
+      "classname": [
+        "config"
+      ],
+      "description": [
+        "A configuration entry that contributes settings to the domain."
+      ],
+      "systemmay": [
+        "description",
+        "class"
+      ]
+    }
+  },
+  {
+    "attrs": {
+      "classname": [
+        "access_control_profile"
+      ],
+      "description": [
+        "A base access control profile."
+      ],
+      "systemmay": [
+        "description"
+      ]
+    }
+  },
+  {
+    "attrs": {
+      "classname": [
+        "access_control_search"
+      ],
+      "description": [
+        "An access control profile that grants search access."
+      ],
+      "systemmay": [
+        "acp_search_attr",
+        "acp_receiver"
+      ],
+      "systemsupplements": [
+        "access_control_profile"
+      ]
+    }
+  },
+  {
+    "attrs": {
+      "classname": [
+        "access_control_modify"
+      ],
+      "description": [
+        "An access control profile that grants modify access."
+      ],
+      "systemmay": [
+        "acp_modify_attr",
+        "acp_modify_class",
+        "acp_receiver"
+      ],
+      "systemsupplements": [
+        "access_control_profile"
+      ]
+    }
+  },
+  {
+    "attrs": {
+      "classname": [
+        "access_control_delete"
+      ],
+      "description": [
+        "An access control profile that grants delete access."
+      ],
+      "systemmay": [
+        "acp_receiver"
+      ],
+      "systemsupplements": [
+        "access_control_profile"
+      ]
+    }
+  },
+  {
+    "attrs": {
+      "classname": [
+        "access_control_create"
+      ],
+      "description": [
+        "An access control profile that grants create access."
+      ],
+      "systemmay": [
+        "acp_create_attr",
+        "acp_create_class",
+        "acp_receiver"
+      ],
+      "systemsupplements": [
+        "access_control_profile"
+      ]
+    }
+  },
+  {
+    "attrs": {
+      "classname": [
+        "access_control_manage_accounts"
+      ],
+      "description": [
+        "An access control profile that manages account credentials."
+      ],
+      "systemmay": [
+        "acp_receiver"
+      ],
+      "systemsupplements": [
+        "access_control_profile"
+      ]
+    }
+  },
+  {
+    "attrs": {
+      "classname": [
+        "access_control_manage_roles"
+      ],
+      "description": [
+        "An access control profile that manages role assignments."
+      ],
+      "systemmay": [
+        "acp_receiver"
+      ],
+      "systemsupplements": [
+        "access_control_profile"
+      ]
+    }
+  },
+  {
+    "attrs": {
+      "classname": [
+        "membership"
+      ],
+      "description": [
+        "A membership relationship between an entry and a group."
+      ],
+      "systemmay": [
+        "member",
+        "memberof"
+      ]
+    }
+  },
+  {
+    "attrs": {
+      "classname": [
+        "memberof"
+      ],
+      "description": [
+        "Tracks the groups an entry is a member of."
+      ],
+      "systemmay": [
+        "memberof"
+      ]
+    }
+  },
+  {
+    "attrs": {
+      "classname": [
+        "gidnumber"
+      ],
+      "description": [
+        "A POSIX numeric group identifier."
+      ],
+      "systemmay": [
+        "gidnumber"
+      ]
+    }
+  },
+  {
+    "attrs": {
+      "classname": [
+        "sync_account"
+      ],
+      "description": [
+        "An account used by a replication or synchronization peer."
+      ],
+      "systemmay": [
+        "description",
+        "sync_token",
+        "sync_cookie"
+      ],
+      "systemsupplements": [
+        "account"
+      ]
+    }
+  },
+  {
+    "attrs": {
+      "classname": [
+        "sync_provider"
+      ],
+      "description": [
+        "A synchronization provider that supplies entries."
+      ],
+      "systemmay": [
+        "description",
+        "sync_token",
+        "sync_cookie"
+      ]
+    }
+  },
+  {
+    "attrs": {
+      "classname": [
+        "sync_consumer"
+      ],
+      "description": [
+        "A synchronization consumer that receives entries."
+      ],
+      "systemmay": [
+        "description",
+        "sync_token",
+        "sync_cookie"
+      ]
+    }
+  },
+  {
+    "attrs": {
+      "classname": [
+        "application"
+      ],
+      "description": [
+        "An application entry that holds OAuth2 configuration."
+      ],
+      "systemmay": [
+        "description",
+        "oauth2_rs_name",
+        "oauth2_rs_origin",
+        "oauth2_rs_scope_map"
+      ]
+    }
+  },
+  {
+    "attrs": {
+      "classname": [
+        "oauth2_resource_server"
+      ],
+      "description": [
+        "An OAuth2 resource server."
+      ],
+      "systemmay": [
+        "oauth2_rs_name",
+        "oauth2_rs_origin",
+        "oauth2_rs_scope_map",
+        "oauth2_rs_implicit_scopes"
+      ]
+    }
+  },
+  {
+    "attrs": {
+      "classname": [
+        "oauth2_resource_server_basic"
+      ],
+      "description": [
+        "An OAuth2 resource server using basic authentication."
+      ],
+      "systemmay": [
+        "oauth2_rs_basic_secret"
+      ],
+      "systemsupplements": [
+        "oauth2_resource_server"
+      ]
+    }
+  },
+  {
+    "attrs": {
+      "classname": [
+        "oauth2_client"
+      ],
+      "description": [
+        "An OAuth2 client application entry."
+      ],
+      "systemmay": [
+        "oauth2_rs_name",
+        "oauth2_rs_origin",
+        "oauth2_rs_redirect_uri"
+      ]
+    }
+  },
+  {
+    "attrs": {
+      "classname": [
+        "recycle_bin"
+      ],
+      "description": [
+        "A deleted entry kept in the recycle bin."
+      ],
+      "systemmay": [
+        "description",
+        "class"
+      ]
+    }
+  },
+  {
+    "attrs": {
+      "classname": [
+        "tombstone"
+      ],
+      "description": [
+        "A marker for an entry that has been deleted."
+      ],
+      "systemmay": [
+        "description"
+      ]
+    }
+  },
+  {
+    "attrs": {
+      "classname": [
+        "conflict"
+      ],
+      "description": [
+        "An entry that could not be applied during replication."
+      ],
+      "systemmay": [
+        "description"
+      ]
+    }
+  },
+  {
+    "attrs": {
+      "classname": [
+        "builtin"
+      ],
+      "description": [
+        "A built-in entry that is managed by Kanidm."
+      ],
+      "systemmay": [
+        "description"
+      ]
+    }
+  },
+  {
+    "attrs": {
+      "classname": [
+        "idm"
+      ],
+      "description": [
+        "A base class for identity management entries."
+      ],
+      "systemmay": [
+        "description"
+      ],
+      "systemsupplements": [
+        "object"
+      ]
+    }
+  },
+  {
+    "attrs": {
+      "classname": [
+        "idm_acp"
+      ],
+      "description": [
+        "An identity management access control profile."
+      ],
+      "systemmay": [
+        "description"
+      ],
+      "systemsupplements": [
+        "access_control_profile"
+      ]
+    }
+  },
+  {
+    "attrs": {
+      "classname": [
+        "idm_domain"
+      ],
+      "description": [
+        "An identity management domain entry."
+      ],
+      "systemsupplements": [
+        "domain",
+        "object"
+      ]
+    }
+  },
+  {
+    "attrs": {
+      "classname": [
+        "idm_group"
+      ],
+      "description": [
+        "An identity management group."
+      ],
+      "systemsupplements": [
+        "group",
+        "object"
+      ]
+    }
+  },
+  {
+    "attrs": {
+      "classname": [
+        "idm_person"
+      ],
+      "description": [
+        "An identity management person account."
+      ],
+      "systemsupplements": [
+        "person",
+        "account"
+      ]
+    }
+  },
+  {
+    "attrs": {
+      "classname": [
+        "idm_service_account"
+      ],
+      "description": [
+        "An identity management service account."
+      ],
+      "systemsupplements": [
+        "service_account",
+        "account"
+      ]
+    }
+  },
+  {
+    "attrs": {
+      "classname": [
+        "migration_dyn_group"
+      ],
+      "description": [
+        "A dynamic group imported during migration."
+      ],
+      "systemsupplements": [
+        "group",
+        "object"
+      ]
+    }
+  },
+  {
+    "attrs": {
+      "classname": [
+        "migration_static_group"
+      ],
+      "description": [
+        "A static group imported during migration."
+      ],
+      "systemsupplements": [
+        "group",
+        "object"
+      ]
+    }
+  },
+  {
+    "attrs": {
+      "classname": [
+        "credential"
+      ],
+      "description": [
+        "A credential attached to an account."
+      ],
+      "systemmay": [
+        "credential_uuid",
+        "credential_type"
+      ]
+    }
+  },
+  {
+    "attrs": {
+      "classname": [
+        "webauthn"
+      ],
+      "description": [
+        "A WebAuthn credential registered to an account."
+      ],
+      "systemmay": [
+        "webauthn_attested"
+      ]
+    }
+  },
+  {
+    "attrs": {
+      "classname": [
+        "passkey"
+      ],
+      "description": [
+        "A passkey credential registered to an account."
+      ],
+      "systemmay": [
+        "passkey_attested"
+      ]
+    }
+  },
+  {
+    "attrs": {
+      "classname": [
+        "audit"
+      ],
+      "description": [
+        "An audit event recorded by the server."
+      ],
+      "systemmay": [
+        "description",
+        "timestamp"
+      ]
+    }
+  }
+]

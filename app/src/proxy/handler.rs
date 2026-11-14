@@ -135,6 +135,11 @@ pub async fn proxy(State(state): State<AppState>, request: Request) -> Response 
                     &upstream_path,
                     upstream.body,
                 );
+                let body = super::schema_fallback::class_types(
+                    &method,
+                    &upstream_path,
+                    body,
+                );
                 passthrough(upstream.status, upstream.content_type, body)
             }
             false => upstream_error(upstream.status, &upstream.body),
