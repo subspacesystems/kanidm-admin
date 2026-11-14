@@ -42,3 +42,8 @@ mod domain_revoke_key_integration;
 #[cfg(all(test, feature = "testcontainer", fork_test = "proxy_group_reset_gidnumber"))]
 #[path = "../../tests/proxy_group_reset_gidnumber/mod.rs"]
 mod group_reset_gidnumber_integration;
+
+// Person gidnumber reset through the proxy; same setup as above.
+#[cfg(all(test, feature = "testcontainer", fork_test = "proxy_person_reset_gidnumber"))]
+#[path = "../../tests/proxy_person_reset_gidnumber/mod.rs"]
+mod person_reset_gidnumber_integration;
