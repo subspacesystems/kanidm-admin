@@ -672,6 +672,7 @@
 'se8c252dd7f6ee7d8': `Cuenta de sincronización terminada.`,
 'se8d62ffa29b8c9f3': `Huevos de pascua`,
 'se96047011609917a': `Ámbitos concedidos a los miembros de un grupo.`,
+'se97960eb228b885d': `¿Restablecer el número GID? Kanidm generará uno nuevo a partir de la cuenta, y cualquier cosa que use el número anterior dejará de coincidir.`,
 'sea2e8dad1ed23882': `Error al cargar las aplicaciones`,
 'sea43a8d36126f2e7': `Error al cargar los tokens API.`,
 'sea4f08110bb8f15d': `Eliminar`,
