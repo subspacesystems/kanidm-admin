@@ -16,12 +16,19 @@ mod integration;
 
 // Tests that reach the run's Kanidm through KANIDM_URL (or the
 // container fallback); the file lives under tests/ with the other
-// test sources.
-#[cfg(all(test, feature = "testcontainer"))]
+// test sources. build.rs sets `fork_test = "<dir>"` only when
+// tests/<dir>/mod.rs exists, so a module declared before its test
+// file lands still compiles.
+#[cfg(all(test, feature = "testcontainer", fork_test = "proxy_env"))]
 #[path = "../../tests/proxy_env/mod.rs"]
 mod env_integration;
 
 // Group entry manager set/clear through the proxy; same setup as above.
-#[cfg(all(test, feature = "testcontainer"))]
+#[cfg(all(test, feature = "testcontainer", fork_test = "proxy_group_manager"))]
 #[path = "../../tests/proxy_group_manager/mod.rs"]
 mod group_manager_integration;
+
+// Person softlock reset through the proxy; same setup as above.
+#[cfg(all(test, feature = "testcontainer", fork_test = "proxy_person_softlock"))]
+#[path = "../../tests/proxy_person_softlock/mod.rs"]
+mod person_softlock_integration;
