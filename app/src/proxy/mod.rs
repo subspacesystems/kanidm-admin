@@ -62,3 +62,8 @@ mod schema_attributes_integration;
 #[cfg(all(test, feature = "testcontainer", fork_test = "proxy_schema_classes"))]
 #[path = "../../tests/proxy_schema_classes/mod.rs"]
 mod schema_classes_integration;
+
+// Person application-password list reads through the proxy; same setup as above.
+#[cfg(all(test, feature = "testcontainer", fork_test = "proxy_person_app_passwords"))]
+#[path = "../../tests/proxy_person_app_passwords/mod.rs"]
+mod person_app_passwords_integration;
