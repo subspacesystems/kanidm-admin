@@ -2905,6 +2905,62 @@
   <source>Clear softlock</source>
   <target state="needs-review-translation">Сбросить блокировку</target>
 </trans-unit>
+<trans-unit id="s6e3abdd08517750b">
+  <source>Application: <ph id="0">${password.applicationName}</ph></source>
+  <target state="needs-review-translation">Приложение: <ph id="0">${password.applicationName}</ph></target>
+</trans-unit>
+<trans-unit id="s84551dd20a9876ff">
+  <source>Application passwords</source>
+  <target state="needs-review-translation">Пароли приложений</target>
+</trans-unit>
+<trans-unit id="s1d02274353b55eec">
+  <source>No application passwords.</source>
+  <target state="needs-review-translation">Нет паролей приложений.</target>
+</trans-unit>
+<trans-unit id="s80acac14105bafc7">
+  <source>Failed to load schema attributes</source>
+  <target state="needs-review-translation">Не удалось загрузить атрибуты схемы</target>
+</trans-unit>
+<trans-unit id="sf0e061c32c8434b2">
+  <source>Syntax</source>
+  <target state="needs-review-translation">Синтаксис</target>
+</trans-unit>
+<trans-unit id="sadc1c0aa93d9095b">
+  <source>Multivalue</source>
+  <target state="needs-review-translation">Многозначный</target>
+</trans-unit>
+<trans-unit id="scb489a1a173ac3f0">
+  <source>Yes</source>
+  <target state="needs-review-translation">Да</target>
+</trans-unit>
+<trans-unit id="scd22f7a4d5963666">
+  <source>Unique</source>
+  <target state="needs-review-translation">Уникальный</target>
+</trans-unit>
+<trans-unit id="s4e0920bd59721c00">
+  <source>Back to System</source>
+  <target state="needs-review-translation">Назад к системе</target>
+</trans-unit>
+<trans-unit id="s47cf3b789c0d623a">
+  <source>Filter attributes...</source>
+  <target state="needs-review-translation">Фильтр атрибутов...</target>
+</trans-unit>
+<trans-unit id="sd737527308c6ffe3">
+  <source>No attribute types found.</source>
+  <target state="needs-review-translation">Типы атрибутов не найдены.</target>
+</trans-unit>
+<trans-unit id="s5df4eb1350801a96">
+  <source>Schema</source>
+  <target state="needs-review-translation">Схема</target>
+</trans-unit>
+<trans-unit id="sb3b5c62e11142d8e">
+  <source>Browse the attribute types defined in Kanidm's schema.</source>
+  <target state="needs-review-translation">Просмотрите типы атрибутов, определённые в схеме Kanidm.</target>
+</trans-unit>
+<trans-unit id="se2ea3985c43030a7">
+  <source>Schema attributes</source>
+  <target state="needs-review-translation">Атрибуты схемы</target>
+</trans-unit>
 </body>
 </file>
 </xliff>

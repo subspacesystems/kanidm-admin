@@ -5,10 +5,13 @@
 
 import { ApiError, apiFetch } from '@/shared/services/http-client';
 import { entryBody, type KanidmEntry } from '@/shared/types/kanidm';
+import { applicationService } from '@/features/applications/services/application.service';
 import type {
+  ApplicationPasswordRef,
   CredentialStatusView,
   CredentialUpdateRequest,
   CredentialUpdateStatusView,
+  PersonApplicationPassword,
   PersonDetail,
   PersonSummary,
   SessionItem,
@@ -17,6 +20,7 @@ import type {
 import { toPersonDetail, toPersonSummary } from '../types/person.types';
 
 const BASE = '/api/kanidm/v1';
+const SCIM_BASE = '/api/kanidm/scim/v1';
 
 class PersonService {
   private static instance: PersonService;
@@ -121,6 +125,42 @@ class PersonService {
     return apiFetch<CredentialStatusView>(
       `${BASE}/person/${encodeURIComponent(id)}/_credential/_status`
     );
+  }
+
+  /**
+   * List a person's application passwords. The server has no
+   * GET .../Application route: the values are the multi-valued
+   * `application_password` attribute of the SCIM person entry (vendor
+   * ScimApplicationPasswordReference). Absent, null or non-array means
+   * none. Application names come from the SCIM application list; an id
+   * that is not found keeps itself as the name, and a failed list call
+   * falls back to ids too.
+   */
+  async applicationPasswords(id: string): Promise<PersonApplicationPassword[]> {
+    const entry = await apiFetch<{ application_password?: unknown }>(
+      `${SCIM_BASE}/Person/${encodeURIComponent(id)}`
+    );
+    const raw = entry.application_password;
+    const refs: ApplicationPasswordRef[] = Array.isArray(raw)
+      ? (raw as ApplicationPasswordRef[])
+      : [];
+
+    const names = new Map<string, string>();
+    try {
+      const applications = await applicationService.list();
+      for (const application of applications) {
+        names.set(application.id, application.displayName || application.name);
+      }
+    } catch {
+      // Names are optional; the id stands in below.
+    }
+
+    return refs.map((ref) => ({
+      id: ref.uuid,
+      label: ref.label,
+      applicationId: ref.applicationUuid,
+      applicationName: names.get(ref.applicationUuid) ?? ref.applicationUuid,
+    }));
   }
 
   /**

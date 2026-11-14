@@ -75,6 +75,17 @@ export const personCredentialsTabStyles = css`
     white-space: nowrap;
   }
 
+  .app-passwords {
+    margin-top: 24px;
+  }
+
+  .app-passwords h3 {
+    margin: 0 0 12px;
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--theme-color-text-primary);
+  }
+
   .loading {
     display: flex;
     flex-direction: column;

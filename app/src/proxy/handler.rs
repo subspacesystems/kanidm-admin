@@ -121,7 +121,7 @@ pub async fn proxy(State(state): State<AppState>, request: Request) -> Response 
     // 5. Forward.
     let forward_request = ForwardRequest {
         method: method.clone(),
-        path_and_query: upstream_path,
+        path_and_query: upstream_path.clone(),
         content_type,
         body,
         bearer_token: token.to_string(),
@@ -129,7 +129,14 @@ pub async fn proxy(State(state): State<AppState>, request: Request) -> Response 
 
     match state.proxy.forward(forward_request).await {
         Ok(upstream) => match upstream.status.is_success() {
-            true => passthrough(upstream.status, upstream.content_type, upstream.body),
+            true => {
+                let body = super::schema_fallback::attribute_types(
+                    &method,
+                    &upstream_path,
+                    upstream.body,
+                );
+                passthrough(upstream.status, upstream.content_type, body)
+            }
             false => upstream_error(upstream.status, &upstream.body),
         },
         Err(_) => ApiError::kanidm_unreachable().into_response(),
