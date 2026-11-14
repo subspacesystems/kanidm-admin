@@ -14,7 +14,7 @@ import '@/shared/components/ui-card';
 import '@/shared/components/ui-button';
 import '@/shared/components/form-field';
 import { groupService } from '../services/group.service';
-import type { GroupDetail } from '../types/group.types';
+import type { GroupDetail, GroupSummary } from '../types/group.types';
 
 @customElement('group-settings-tab')
 @localized()
@@ -29,6 +29,9 @@ export class GroupSettingsTab extends LitElement {
   @state() private saving = false;
   @state() private renaming = false;
   @state() private renameOpen = false;
+  @state() private entryManager = '';
+  @state() private entryManagerBusy = false;
+  @state() private entryManagerGroups: GroupSummary[] = [];
 
   // Form state (synced from `detail` unless the user has edits).
   @state() private displayName = '';
@@ -36,6 +39,14 @@ export class GroupSettingsTab extends LitElement {
   @state() private mail = '';
   @state() private newName = '';
   private dirty = false;
+
+  connectedCallback(): void {
+    super.connectedCallback();
+    void groupService
+      .list()
+      .then((groups) => (this.entryManagerGroups = groups))
+      .catch(() => (this.entryManagerGroups = []));
+  }
 
   protected willUpdate(changed: PropertyValues): void {
     if (changed.has('detail') && this.detail && !this.dirty) {
@@ -121,6 +132,41 @@ export class GroupSettingsTab extends LitElement {
     }
   }
 
+  private async setEntryManager(): Promise<void> {
+    const manager = this.entryManager.trim();
+    if (!manager || this.entryManagerBusy) return;
+    this.entryManagerBusy = true;
+    try {
+      await authService.withStepUp(() =>
+        groupService.setEntryManager(this.id, manager)
+      );
+      notificationService.success(msg('Entry manager updated.'));
+      this.entryManager = '';
+      this.emitChanged();
+    } catch {
+      notificationService.error(msg('Failed to set entry manager.'));
+    } finally {
+      this.entryManagerBusy = false;
+    }
+  }
+
+  private async clearEntryManager(): Promise<void> {
+    if (!this.detail?.entryManagedBy || this.entryManagerBusy) return;
+    this.entryManagerBusy = true;
+    try {
+      await authService.withStepUp(() =>
+        groupService.clearEntryManager(this.id)
+      );
+      notificationService.success(msg('Entry manager cleared.'));
+      this.entryManager = '';
+      this.emitChanged();
+    } catch {
+      notificationService.error(msg('Failed to clear entry manager.'));
+    } finally {
+      this.entryManagerBusy = false;
+    }
+  }
+
   render() {
     const detail = this.detail;
     if (!detail) {
@@ -166,6 +212,47 @@ export class GroupSettingsTab extends LitElement {
           >
             ${this.saving ? msg('Saving...') : msg('Save')}
           </ui-button>
+        </div>
+      </ui-card>
+      <ui-card>
+        <h2 slot="header">${msg('Entry manager')}</h2>
+        <p class="muted">
+          ${msg('Current entry manager')}:
+          <span class="mono" data-testid="entry-manager-current"
+            >${detail.entryManagedBy ?? msg('None')}</span
+          >
+        </p>
+        <form-field
+          fieldId="grp-entry-manager"
+          label=${msg('Entry managed by')}
+          type="combobox"
+          .value=${this.entryManager}
+          .options=${this.entryManagerGroups.map((group) => ({
+            value: group.id,
+            label: group.displayName ?? group.id,
+          }))}
+          @field-input=${(e: CustomEvent<{ value: string }>) =>
+            (this.entryManager = e.detail.value)}
+        ></form-field>
+        <div class="actions">
+          <ui-button
+            variant="primary"
+            ?disabled=${this.entryManager.trim() === '' ||
+            this.entryManagerBusy}
+            ?loading=${this.entryManagerBusy}
+            @click=${() => void this.setEntryManager()}
+          >
+            ${msg('Set entry manager')}
+          </ui-button>
+          ${detail.entryManagedBy
+            ? html`<ui-button
+                variant="danger"
+                ?disabled=${this.entryManagerBusy}
+                @click=${() => void this.clearEntryManager()}
+              >
+                ${msg('Clear entry manager')}
+              </ui-button>`
+            : nothing}
         </div>
       </ui-card>
       <ui-card>
@@ -243,6 +330,7 @@ export class GroupSettingsTab extends LitElement {
     .actions {
       display: flex;
       justify-content: flex-end;
+      gap: 8px;
     }
   `;
 }
