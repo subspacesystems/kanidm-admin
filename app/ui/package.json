@@ -17,7 +17,8 @@
     "build": "bun pre-build && bunx --bun vite build",
     "pre-build": "bun i18n:build && tsc",
     "i18n:extract": "lit-localize extract",
-    "i18n:build": "lit-localize build"
+    "i18n:build": "lit-localize build",
+    "test:e2e": "playwright test"
   },
   "dependencies": {
     "@lit-labs/router": "^0.1.4",
@@ -28,6 +29,7 @@
     "urlpattern-polyfill": "^10.1.0"
   },
   "devDependencies": {
+    "@playwright/test": "1.64.1",
     "@types/node": "^25.0.9",
     "eslint": "^9.39.2",
     "eslint-config-prettier": "^10.1.8",

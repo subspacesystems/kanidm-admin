@@ -35,6 +35,16 @@ interface ProfileResponse {
 /** Maximum password attempts offered in one step-up flow. */
 const MAX_STEP_UP_ATTEMPTS = 3;
 
+/**
+ * Session-storage flag marking an in-flight password sign-in. It survives
+ * a navigation started while the login request is still running, so the
+ * next page keeps polling the session until the cookie arrives instead of
+ * bouncing back to the welcome page.
+ */
+const PENDING_SIGN_IN_KEY = 'kadmin-pending-sign-in';
+const PENDING_SIGN_IN_POLL_MS = 100;
+const PENDING_SIGN_IN_TIMEOUT_MS = 5000;
+
 class AuthService {
   private static instance: AuthService;
 
@@ -82,19 +92,55 @@ class AuthService {
   }
 
   private async restoreSession(): Promise<void> {
-    try {
-      const session = await apiFetch<SessionResponse>('/api/auth/session', {
-        ignoreSessionExpired: true,
-      });
-      this.applySession(session);
-    } catch (error) {
-      if (error instanceof ApiError && error.status === 401) {
-        this.resetState();
-        return;
+    const pendingSignIn = this.pendingSignIn();
+    const deadline = Date.now() + PENDING_SIGN_IN_TIMEOUT_MS;
+    for (;;) {
+      try {
+        const session = await apiFetch<SessionResponse>('/api/auth/session', {
+          ignoreSessionExpired: true,
+        });
+        this.clearPendingSignIn();
+        this.applySession(session);
+        break;
+      } catch (error) {
+        if (error instanceof ApiError && error.status === 401) {
+          if (pendingSignIn && Date.now() < deadline) {
+            await new Promise((resolve) =>
+              setTimeout(resolve, PENDING_SIGN_IN_POLL_MS)
+            );
+            continue;
+          }
+          this.resetState();
+          return;
+        }
+        throw error;
       }
-      throw error;
     }
     await this.fetchProfile();
+  }
+
+  private markPendingSignIn(): void {
+    try {
+      sessionStorage.setItem(PENDING_SIGN_IN_KEY, '1');
+    } catch {
+      // Storage can be unavailable in private or sandboxed contexts.
+    }
+  }
+
+  private pendingSignIn(): boolean {
+    try {
+      return sessionStorage.getItem(PENDING_SIGN_IN_KEY) === '1';
+    } catch {
+      return false;
+    }
+  }
+
+  private clearPendingSignIn(): void {
+    try {
+      sessionStorage.removeItem(PENDING_SIGN_IN_KEY);
+    } catch {
+      // Storage can be unavailable in private or sandboxed contexts.
+    }
   }
 
   private async fetchProfile(): Promise<void> {
@@ -189,10 +235,21 @@ class AuthService {
 
   /** Sign in with username + password; throws ApiError on failure. */
   async signIn(username: string, password: string): Promise<void> {
-    const session = await apiFetch<SessionResponse>('/api/auth/login', {
-      method: 'POST',
-      body: JSON.stringify({ username, password }),
-    });
+    this.markPendingSignIn();
+    let session: SessionResponse;
+    try {
+      session = await apiFetch<SessionResponse>('/api/auth/login', {
+        method: 'POST',
+        body: JSON.stringify({ username, password }),
+        // A navigation during sign-in must not abort the request before
+        // the session cookie is set.
+        keepalive: true,
+      });
+    } catch (error) {
+      this.clearPendingSignIn();
+      throw error;
+    }
+    this.clearPendingSignIn();
     this.applySession(session);
     // Fetch groups before resolving so the first navigation already
     // knows the visible sections.

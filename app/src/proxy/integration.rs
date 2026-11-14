@@ -62,6 +62,8 @@ async fn container_router() -> (Router, TestcontainersHandle, DevCredentials) {
         idm_admin_password: recover_password(container, IDM_ADMIN_USERNAME).await,
     };
 
+    grant_admin_group_admin(&effective, &credentials).await;
+
     let state = auth::app_state_from_settings(&effective).expect("app state from effective");
     let router = auth::handlers::routes()
         .merge(proxy::handler::routes())
@@ -74,6 +76,9 @@ async fn container_router() -> (Router, TestcontainersHandle, DevCredentials) {
 /// the files named by `KANIDM_ADMIN_PASSWORD_FILE` and
 /// `KANIDM_IDM_ADMIN_PASSWORD_FILE`), and against a fresh testcontainer
 /// otherwise. The handle is `None` when no container was started.
+// Stub awaiting the `test-env-kanidm` task's test module; nothing in this
+// branch calls it yet, so mark the (otherwise dead) definition explicitly.
+#[allow(dead_code)]
 pub(super) async fn env_or_container_router(
 ) -> (Router, Option<TestcontainersHandle>, DevCredentials) {
     match std::env::var("KANIDM_URL") {
@@ -99,6 +104,8 @@ pub(super) async fn env_or_container_router(
                 idm_admin_password: read_password_file("KANIDM_IDM_ADMIN_PASSWORD_FILE"),
             };
 
+            grant_admin_group_admin(&settings, &credentials).await;
+
             let state =
                 auth::app_state_from_settings(&settings).expect("app state from env settings");
             let router = auth::handlers::routes()
@@ -111,6 +118,26 @@ pub(super) async fn env_or_container_router(
             (router, Some(handle), credentials)
         }
     }
+}
+
+/// Grant the built-in `admin` the identity-management group role in the
+/// run's Kanidm. Group-entry-manager tests create their fixture groups as
+/// `admin` (which holds the access-control role needed to set the entry
+/// manager) and then clear them; without membership in `idm_admins`,
+/// Kanidm denies the group writes. Idempotent, so concurrent tests are
+/// safe. Test-only setup against a throwaway Kanidm.
+async fn grant_admin_group_admin(settings: &KanidmSettings, credentials: &DevCredentials) {
+    let builder = crate::auth::ops::client_builder_from_settings(settings)
+        .expect("provisioning client builder from Kanidm settings");
+    let client = builder.build().expect("provisioning client build");
+    client
+        .auth_simple_password(IDM_ADMIN_USERNAME, &credentials.idm_admin_password)
+        .await
+        .expect("idm_admin auth for admin group provisioning");
+    client
+        .idm_group_add_members("idm_admins", &[ADMIN_USERNAME])
+        .await
+        .expect("grant admin membership in idm_admins");
 }
 
 /// Read a password file named by the named env var (trimmed of the

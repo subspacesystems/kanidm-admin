@@ -2813,6 +2813,62 @@
   <source>Go to home page</source>
   <target>Ir a la página principal</target>
 </trans-unit>
+<trans-unit id="s2d49bf3fda05b852">
+  <source>Domain key revoked.</source>
+  <target state="needs-review-translation">Clave del dominio revocada.</target>
+</trans-unit>
+<trans-unit id="saf8e35741b8d52c9">
+  <source>Failed to revoke the domain key.</source>
+  <target state="needs-review-translation">No se pudo revocar la clave del dominio.</target>
+</trans-unit>
+<trans-unit id="sc59e9199885c4606">
+  <source>Revoke domain key</source>
+  <target state="needs-review-translation">Revocar clave del dominio</target>
+</trans-unit>
+<trans-unit id="s513b6f6b5a5f3157">
+  <source>Revokes a domain key by its id. Every session signed with it is invalidated, so all users must sign in again.</source>
+  <target state="needs-review-translation">Revoca una clave del dominio por su id. Todas las sesiones firmadas con ella se invalidan, por lo que todos los usuarios deben iniciar sesión de nuevo.</target>
+</trans-unit>
+<trans-unit id="s7e136fd89fb9c014">
+  <source>Revoke this domain key? All sessions signed with it are invalidated and cannot be restored.</source>
+  <target state="needs-review-translation">¿Revocar esta clave del dominio? Todas las sesiones firmadas con ella se invalidan y no se pueden restaurar.</target>
+</trans-unit>
+<trans-unit id="s7939798cb1d7396b">
+  <source>Entry manager updated.</source>
+  <target state="needs-review-translation">Administrador de entrada actualizado.</target>
+</trans-unit>
+<trans-unit id="sab59abc0a02aa2fc">
+  <source>Failed to set entry manager.</source>
+  <target state="needs-review-translation">No se pudo establecer el administrador de entrada.</target>
+</trans-unit>
+<trans-unit id="s5584f6cad72e3b66">
+  <source>Entry manager cleared.</source>
+  <target state="needs-review-translation">Administrador de entrada borrado.</target>
+</trans-unit>
+<trans-unit id="sb35ad6390668e0b7">
+  <source>Failed to clear entry manager.</source>
+  <target state="needs-review-translation">No se pudo borrar el administrador de entrada.</target>
+</trans-unit>
+<trans-unit id="se2804ce9404d76e8">
+  <source>Entry manager</source>
+  <target state="needs-review-translation">Administrador de entrada</target>
+</trans-unit>
+<trans-unit id="s41aac5477d636e39">
+  <source>Current entry manager</source>
+  <target state="needs-review-translation">Administrador de entrada actual</target>
+</trans-unit>
+<trans-unit id="s669b18c6d2d9c95b">
+  <source>None</source>
+  <target state="needs-review-translation">Ninguno</target>
+</trans-unit>
+<trans-unit id="s1e30088d1a06035c">
+  <source>Set entry manager</source>
+  <target state="needs-review-translation">Establecer administrador de entrada</target>
+</trans-unit>
+<trans-unit id="sd479fa35a6ca7e21">
+  <source>Clear entry manager</source>
+  <target state="needs-review-translation">Borrar administrador de entrada</target>
+</trans-unit>
 <trans-unit id="s51a6024805acd2b8" state="needs-review-translation">
   <source>Softlock cleared.</source>
   <target>Bloqueo temporal eliminado.</target>
