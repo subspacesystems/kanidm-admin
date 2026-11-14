@@ -206,8 +206,8 @@ export class PersonPosixTab extends LitElement {
         <h3>${msg('POSIX attributes')}</h3>
         ${this.token
           ? html`<p class="muted">
-              ${msg('UUID')}: ${this.token.uuid} · ${msg('GID')}:
-              ${this.token.gidnumber}
+              ${msg('UUID')}: ${this.token.uuid} ·
+              <span>${msg('GID')}: ${this.token.gidnumber}</span>
             </p>`
           : nothing}
         ${this.renderPosixForm()}
