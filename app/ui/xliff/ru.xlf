@@ -2813,6 +2813,18 @@
   <source>Go to home page</source>
   <target>На главную страницу</target>
 </trans-unit>
+<trans-unit id="s51a6024805acd2b8" state="needs-review-translation">
+  <source>Softlock cleared.</source>
+  <target>Блокировка снята.</target>
+</trans-unit>
+<trans-unit id="sf61181ee66a36073" state="needs-review-translation">
+  <source>Failed to clear softlock.</source>
+  <target>Не удалось снять блокировку.</target>
+</trans-unit>
+<trans-unit id="s770b7ab6c0f238fd" state="needs-review-translation">
+  <source>Clear softlock</source>
+  <target>Сбросить блокировку</target>
+</trans-unit>
 </body>
 </file>
 </xliff>

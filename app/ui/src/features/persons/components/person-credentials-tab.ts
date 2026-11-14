@@ -63,6 +63,7 @@ export class PersonCredentialsTab extends LitElement {
   /** TOTP labels of the credential pending a "disable MFA" confirm. */
   @state() private mfaConfirm: string[] | null = null;
   @state() private mfaBusy = false;
+  @state() private softlockBusy = false;
 
   connectedCallback(): void {
     super.connectedCallback();
@@ -162,6 +163,22 @@ export class PersonCredentialsTab extends LitElement {
       notificationService.error(msg('Failed to send reset link.'));
     } finally {
       this.submitting = false;
+    }
+  }
+
+  /** Clear the account's credential softlock (step-up required). */
+  private async handleClearSoftlock(): Promise<void> {
+    if (this.softlockBusy) {
+      return;
+    }
+    this.softlockBusy = true;
+    try {
+      await authService.withStepUp(() => personService.resetSoftlock(this.id));
+      notificationService.success(msg('Softlock cleared.'));
+    } catch {
+      notificationService.error(msg('Failed to clear softlock.'));
+    } finally {
+      this.softlockBusy = false;
     }
   }
 
@@ -421,6 +438,14 @@ export class PersonCredentialsTab extends LitElement {
             @click=${this.openEmailModal}
           >
             ${msg('Email reset link')}
+          </ui-button>
+          <ui-button
+            icon="lock"
+            ?loading=${this.softlockBusy}
+            ?disabled=${this.submitting}
+            @click=${this.handleClearSoftlock}
+          >
+            ${msg('Clear softlock')}
           </ui-button>
         </div>
 
