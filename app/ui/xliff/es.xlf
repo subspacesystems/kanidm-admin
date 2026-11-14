@@ -2869,17 +2869,37 @@
   <source>Clear entry manager</source>
   <target state="needs-review-translation">Borrar administrador de entrada</target>
 </trans-unit>
-<trans-unit id="s51a6024805acd2b8" state="needs-review-translation">
+<trans-unit id="sb989305820e424f7">
+  <source>GID number reset.</source>
+  <target state="needs-review-translation">Número GID restablecido.</target>
+</trans-unit>
+<trans-unit id="sf5bc7e36327975bc">
+  <source>Failed to reset the GID number.</source>
+  <target state="needs-review-translation">No se pudo restablecer el número GID.</target>
+</trans-unit>
+<trans-unit id="s497350b789cdf831">
+  <source>Reset GID number</source>
+  <target state="needs-review-translation">Restablecer número GID</target>
+</trans-unit>
+<trans-unit id="s255857544a9d5ec0">
+  <source>Reset</source>
+  <target state="needs-review-translation">Restablecer</target>
+</trans-unit>
+<trans-unit id="s2aa0296b960c7add">
+  <source>Reset the GID number? Kanidm will generate a new one from the group, and anything using the old number stops matching.</source>
+  <target state="needs-review-translation">¿Restablecer el número GID? Kanidm generará uno nuevo a partir del grupo, y todo lo que use el número anterior dejará de coincidir.</target>
+</trans-unit>
+<trans-unit id="s51a6024805acd2b8">
   <source>Softlock cleared.</source>
-  <target>Bloqueo temporal eliminado.</target>
+  <target state="needs-review-translation">Bloqueo temporal eliminado.</target>
 </trans-unit>
-<trans-unit id="sf61181ee66a36073" state="needs-review-translation">
+<trans-unit id="sf61181ee66a36073">
   <source>Failed to clear softlock.</source>
-  <target>No se pudo eliminar el bloqueo temporal.</target>
+  <target state="needs-review-translation">No se pudo eliminar el bloqueo temporal.</target>
 </trans-unit>
-<trans-unit id="s770b7ab6c0f238fd" state="needs-review-translation">
+<trans-unit id="s770b7ab6c0f238fd">
   <source>Clear softlock</source>
-  <target>Eliminar bloqueo temporal</target>
+  <target state="needs-review-translation">Eliminar bloqueo temporal</target>
 </trans-unit>
 </body>
 </file>
