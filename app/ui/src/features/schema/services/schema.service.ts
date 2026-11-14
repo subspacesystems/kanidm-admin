@@ -4,10 +4,11 @@
 
 import { apiFetch } from '@/shared/services/http-client';
 import type { KanidmEntry } from '@/shared/types/kanidm';
-import type { SchemaAttribute } from '../types/schema.types';
-import { toSchemaAttribute } from '../types/schema.types';
+import type { SchemaAttribute, SchemaClass } from '../types/schema.types';
+import { toSchemaAttribute, toSchemaClass } from '../types/schema.types';
 
 const BASE = '/api/kanidm/v1/schema/attributetype';
+const CLASS_BASE = '/api/kanidm/v1/schema/classtype';
 
 class SchemaService {
   private static instance: SchemaService;
@@ -31,6 +32,26 @@ class SchemaService {
     return entries
       .map((entry) => toSchemaAttribute(entry))
       .sort((a, b) => a.name.localeCompare(b.name));
+  }
+
+  /**
+   * Class type list (vendor idm_schema_classtype_list:
+   * GET /v1/schema/classtype -> [{ attrs: {...} }]). Mapped to the page
+   * row model and sorted by name.
+   */
+  async classList(): Promise<SchemaClass[]> {
+    const entries = await apiFetch<KanidmEntry[]>(CLASS_BASE);
+    return entries
+      .map((entry) => toSchemaClass(entry))
+      .sort((a, b) => a.name.localeCompare(b.name));
+  }
+
+  /** One class by name (vendor idm_schema_classtype_get). */
+  async classGet(name: string): Promise<SchemaClass | null> {
+    const entry = await apiFetch<KanidmEntry | null>(
+      `${CLASS_BASE}/${encodeURIComponent(name)}`
+    );
+    return entry === null ? null : toSchemaClass(entry);
   }
 }
 

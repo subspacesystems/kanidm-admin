@@ -29,7 +29,8 @@ export function navigate(path: string, opts?: { replace?: boolean }): void {
     } else {
       history.pushState({}, '', path);
     }
-    void router.goto(path);
+    // The router matches pathnames only; keep query and fragment in history.
+    void router.goto(path.split(/[?#]/)[0]);
   } else {
     window.location.assign(path);
   }

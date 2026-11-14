@@ -31,7 +31,7 @@ import '@/features/oauth2/components/oauth2-list-page';
 import '@/features/oauth2/components/oauth2-detail-page';
 import '@/features/domain/components/domain-page';
 import '@/features/system/components/system-page';
-import '@/features/schema/components/schema-attributes-page';
+import '@/features/schema';
 import '@/features/applications/components/application-list-page';
 import '@/features/sync/components/sync-list-page';
 import '@/features/sync/components/sync-detail-page';
@@ -135,6 +135,17 @@ export class AppComponent extends LitElement {
     {
       path: '/admin/system/attributes',
       render: () => html`<schema-attributes-page></schema-attributes-page>`,
+      enter: async () => this.guardSection('system'),
+    },
+    {
+      path: '/admin/system/classes',
+      render: () => html`<schema-classes-page></schema-classes-page>`,
+      enter: async () => this.guardSection('system'),
+    },
+    {
+      path: '/admin/system/classes/:name',
+      render: ({ name }) =>
+        html`<schema-classes-page .name=${name ?? ''}></schema-classes-page>`,
       enter: async () => this.guardSection('system'),
     },
     {
