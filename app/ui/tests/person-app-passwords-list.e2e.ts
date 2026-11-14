@@ -116,7 +116,8 @@ test.describe('person application passwords list', () => {
     await expect(page.getByText(unknownApp)).toBeVisible();
     await expect(page.getByText('No application passwords.')).toHaveCount(0);
     // Read-only: no delete or create action yet.
-    await expect(page.getByRole('button', { name: /delete|create application/i }))
-      .toHaveCount(0);
+    await expect(
+      page.locator('.app-passwords').getByRole('button')
+    ).toHaveCount(0);
   });
 });
