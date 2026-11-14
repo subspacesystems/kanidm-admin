@@ -364,8 +364,10 @@ export class PersonCredentialsTab extends LitElement {
 
   private renderApplicationPasswords() {
     return html`
-      <div class="app-passwords">
-        <h3>${msg('Application passwords')}</h3>
+      <div class="app-passwords-section">
+        <div class="app-passwords">
+          <h3>${msg('Application passwords')}</h3>
+        </div>
         ${this.appPasswords.length === 0
           ? html`<ui-empty-state icon="key"
               >${msg('No application passwords.')}</ui-empty-state
