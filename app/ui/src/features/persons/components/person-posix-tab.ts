@@ -11,6 +11,7 @@ import { localized } from '@/features/localization';
 import { authService } from '@/features/auth';
 import { notificationService } from '@/features/notifications';
 import { ApiError } from '@/shared/services/http-client';
+import '@/shared/components/confirm-dialog';
 import '@/shared/components/ui-button';
 import { personService } from '../services/person.service';
 import type { UnixUserTokenView } from '../types/person.types';
@@ -25,6 +26,8 @@ export class PersonPosixTab extends LitElement {
   /** null = still loading; false = confirmed not POSIX-enabled. */
   @state() private posixState: 'loading' | 'enabled' | 'disabled' = 'loading';
   @state() private saving = false;
+  @state() private resetOpen = false;
+  @state() private resetting = false;
   @state() private settingPassword = false;
   @state() private gidnumber = '';
   @state() private shell = '';
@@ -81,6 +84,20 @@ export class PersonPosixTab extends LitElement {
     }
   }
 
+  private async resetGidnumber(): Promise<void> {
+    this.resetOpen = false;
+    this.resetting = true;
+    try {
+      await authService.withStepUp(() => personService.resetGidnumber(this.id));
+      notificationService.success(msg('GID number reset.'));
+      await this.load();
+    } catch {
+      notificationService.error(msg('Failed to reset the GID number.'));
+    } finally {
+      this.resetting = false;
+    }
+  }
+
   private async setPassword(): Promise<void> {
     if (this.password === '') {
       notificationService.error(msg('Password must not be empty.'));
@@ -123,13 +140,25 @@ export class PersonPosixTab extends LitElement {
           this.shell = e.detail.value;
         }}
       ></form-field>
-      <ui-button
-        variant="primary"
-        ?loading=${this.saving}
-        @click=${() => void this.savePosix()}
-      >
-        ${this.saving ? msg('Saving...') : msg('Save POSIX attributes')}
-      </ui-button>
+      <div class="actions">
+        <ui-button
+          variant="primary"
+          ?loading=${this.saving}
+          ?disabled=${this.resetting}
+          @click=${() => void this.savePosix()}
+        >
+          ${this.saving ? msg('Saving...') : msg('Save POSIX attributes')}
+        </ui-button>
+        ${this.posixState === 'enabled'
+          ? html`<ui-button
+              variant="secondary"
+              ?disabled=${this.saving || this.resetting}
+              @click=${() => (this.resetOpen = true)}
+            >
+              ${msg('Reset GID number')}
+            </ui-button>`
+          : nothing}
+      </div>
     `;
   }
 
@@ -184,6 +213,19 @@ export class PersonPosixTab extends LitElement {
         ${this.renderPosixForm()}
       </section>
       ${this.renderPasswordForm()}
+      ${this.resetOpen
+        ? html`<confirm-dialog
+            open
+            danger
+            .busy=${this.resetting}
+            confirmLabel=${msg('Reset')}
+            message=${msg(
+              'Reset the GID number? Kanidm will generate a new one from the account, and anything using the old number stops matching.'
+            )}
+            @confirm=${() => void this.resetGidnumber()}
+            @cancel=${() => (this.resetOpen = false)}
+          ></confirm-dialog>`
+        : nothing}
     `;
   }
 
@@ -204,6 +246,10 @@ export class PersonPosixTab extends LitElement {
       margin: 0 0 12px;
       font-size: 14px;
       color: var(--theme-color-text-muted);
+    }
+    .actions {
+      display: flex;
+      gap: 12px;
     }
   `;
 }

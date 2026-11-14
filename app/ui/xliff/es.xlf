@@ -2869,6 +2869,26 @@
   <source>Clear entry manager</source>
   <target state="needs-review-translation">Borrar administrador de entrada</target>
 </trans-unit>
+<trans-unit id="sb989305820e424f7">
+  <source>GID number reset.</source>
+  <target state="needs-review-translation">Número GID restablecido.</target>
+</trans-unit>
+<trans-unit id="sf5bc7e36327975bc">
+  <source>Failed to reset the GID number.</source>
+  <target state="needs-review-translation">No se pudo restablecer el número GID.</target>
+</trans-unit>
+<trans-unit id="s497350b789cdf831">
+  <source>Reset GID number</source>
+  <target state="needs-review-translation">Restablecer número GID</target>
+</trans-unit>
+<trans-unit id="s255857544a9d5ec0">
+  <source>Reset</source>
+  <target state="needs-review-translation">Restablecer</target>
+</trans-unit>
+<trans-unit id="se97960eb228b885d">
+  <source>Reset the GID number? Kanidm will generate a new one from the account, and anything using the old number stops matching.</source>
+  <target state="needs-review-translation">¿Restablecer el número GID? Kanidm generará uno nuevo a partir de la cuenta, y cualquier cosa que use el número anterior dejará de coincidir.</target>
+</trans-unit>
 </body>
 </file>
 </xliff>

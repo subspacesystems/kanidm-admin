@@ -263,6 +263,16 @@ class PersonService {
     });
   }
 
+  /** Reset the gidnumber so Kanidm generates a new one (vendor
+   * idm_person_account_purge_attr with gidnumber; CLI
+   * `kanidm person posix reset-gidnumber`). */
+  async resetGidnumber(id: string): Promise<void> {
+    await apiFetch<void>(
+      `${BASE}/person/${encodeURIComponent(id)}/_attr/gidnumber`,
+      { method: 'DELETE' }
+    );
+  }
+
   /** POSIX password (vendor idm_person_account_unix_cred_put: PUT
    * /v1/person/{id}/_unix/_credential with SingleStringRequest {value}). */
   async posixSetPassword(id: string, password: string): Promise<void> {

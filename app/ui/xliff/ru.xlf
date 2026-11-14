@@ -2869,6 +2869,26 @@
   <source>Clear entry manager</source>
   <target state="needs-review-translation">Очистить менеджера записи</target>
 </trans-unit>
+<trans-unit id="sb989305820e424f7">
+  <source>GID number reset.</source>
+  <target state="needs-review-translation">Номер GID сброшен.</target>
+</trans-unit>
+<trans-unit id="sf5bc7e36327975bc">
+  <source>Failed to reset the GID number.</source>
+  <target state="needs-review-translation">Не удалось сбросить номер GID.</target>
+</trans-unit>
+<trans-unit id="s497350b789cdf831">
+  <source>Reset GID number</source>
+  <target state="needs-review-translation">Сбросить номер GID</target>
+</trans-unit>
+<trans-unit id="s255857544a9d5ec0">
+  <source>Reset</source>
+  <target state="needs-review-translation">Сбросить</target>
+</trans-unit>
+<trans-unit id="se97960eb228b885d">
+  <source>Reset the GID number? Kanidm will generate a new one from the account, and anything using the old number stops matching.</source>
+  <target state="needs-review-translation">Сбросить номер GID? Kanidm сгенерирует новый на основе учетной записи, и всё, что использует старый номер, перестанет совпадать.</target>
+</trans-unit>
 </body>
 </file>
 </xliff>
