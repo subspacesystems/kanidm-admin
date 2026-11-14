@@ -2905,6 +2905,18 @@
   <source>Clear softlock</source>
   <target state="needs-review-translation">Eliminar bloqueo temporal</target>
 </trans-unit>
+<trans-unit id="s6e3abdd08517750b">
+  <source>Application: <ph id="0">${password.applicationName}</ph></source>
+  <target state="needs-review-translation">Aplicación: <ph id="0">${password.applicationName}</ph></target>
+</trans-unit>
+<trans-unit id="s84551dd20a9876ff">
+  <source>Application passwords</source>
+  <target state="needs-review-translation">Contraseñas de aplicaciones</target>
+</trans-unit>
+<trans-unit id="s1d02274353b55eec">
+  <source>No application passwords.</source>
+  <target state="needs-review-translation">No hay contraseñas de aplicaciones.</target>
+</trans-unit>
 <trans-unit id="s80acac14105bafc7">
   <source>Failed to load schema attributes</source>
   <target state="needs-review-translation">No se pudieron cargar los atributos del esquema</target>
