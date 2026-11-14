@@ -52,3 +52,8 @@ mod person_reset_gidnumber_integration;
 #[cfg(all(test, feature = "testcontainer", fork_test = "proxy_sa_reset_gidnumber"))]
 #[path = "../../tests/proxy_sa_reset_gidnumber/mod.rs"]
 mod sa_reset_gidnumber_integration;
+
+// Schema attribute type list through the proxy; same setup as above.
+#[cfg(all(test, feature = "testcontainer", fork_test = "proxy_schema_attributes"))]
+#[path = "../../tests/proxy_schema_attributes/mod.rs"]
+mod schema_attributes_integration;
