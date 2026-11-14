@@ -3,7 +3,7 @@
 // show the unix token details (gidnumber, spn, name) and allow editing
 // the gidnumber (also via unixExtend).
 
-import { LitElement, css, html, nothing } from 'lit';
+import { LitElement, css, html, nothing, type PropertyValues } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import { msg } from '@lit/localize';
 import { localized } from '@/features/localization';
@@ -13,6 +13,7 @@ import '@/shared/components/ui-card';
 import '@/shared/components/ui-button';
 import '@/shared/components/ui-skeleton';
 import '@/shared/components/form-field';
+import '@/shared/components/confirm-dialog';
 import { groupService } from '../services/group.service';
 import type { GroupDetail } from '../types/group.types';
 
@@ -36,7 +37,20 @@ export class GroupPosixTab extends LitElement {
   @state() private token: UnixGroupToken | null = null;
   @state() private tokenLoading = false;
   @state() private saving = false;
+  @state() private resetting = false;
+  @state() private resetOpen = false;
   @state() private gidnumber = '';
+
+  protected willUpdate(changed: PropertyValues): void {
+    if (
+      changed.has('detail') &&
+      this.detail?.isPosix &&
+      this.token === null &&
+      !this.tokenLoading
+    ) {
+      void this.loadToken();
+    }
+  }
 
   private async loadToken(): Promise<void> {
     this.tokenLoading = true;
@@ -69,6 +83,21 @@ export class GroupPosixTab extends LitElement {
       notificationService.error(msg('Failed to save POSIX attributes.'));
     } finally {
       this.saving = false;
+    }
+  }
+
+  private async resetGidnumber(): Promise<void> {
+    if (this.resetting) return;
+    this.resetting = true;
+    try {
+      await authService.withStepUp(() => groupService.resetGidnumber(this.id));
+      notificationService.success(msg('GID number reset.'));
+      this.emitChanged();
+      await this.loadToken();
+    } catch {
+      notificationService.error(msg('Failed to reset the GID number.'));
+    } finally {
+      this.resetting = false;
     }
   }
 
@@ -147,6 +176,13 @@ export class GroupPosixTab extends LitElement {
         ${this.renderGidField()}
         <div class="actions">
           <ui-button
+            variant="secondary"
+            ?disabled=${this.saving || this.resetting}
+            @click=${() => (this.resetOpen = true)}
+          >
+            ${msg('Reset GID number')}
+          </ui-button>
+          <ui-button
             variant="primary"
             ?loading=${this.saving}
             @click=${() => void this.savePosix()}
@@ -155,6 +191,22 @@ export class GroupPosixTab extends LitElement {
           </ui-button>
         </div>
       </ui-card>
+      ${this.resetOpen
+        ? html`<confirm-dialog
+            open
+            danger
+            .busy=${this.resetting}
+            confirmLabel=${msg('Reset')}
+            message=${msg(
+              'Reset the GID number? Kanidm will generate a new one from the group, and anything using the old number stops matching.'
+            )}
+            @confirm=${() => {
+              this.resetOpen = false;
+              void this.resetGidnumber();
+            }}
+            @cancel=${() => (this.resetOpen = false)}
+          ></confirm-dialog>`
+        : nothing}
     `;
   }
 
@@ -204,6 +256,7 @@ export class GroupPosixTab extends LitElement {
     .actions {
       display: flex;
       justify-content: flex-end;
+      gap: 8px;
     }
   `;
 }

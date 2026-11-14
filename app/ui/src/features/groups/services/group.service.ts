@@ -136,6 +136,15 @@ class GroupService {
   }
 
   /**
+   * Reset the gidnumber (vendor idm_group_purge_attr with gidnumber;
+   * CLI: kanidm group posix reset-gidnumber). Kanidm generates a new
+   * one from the group's uuid.
+   */
+  async resetGidnumber(id: string): Promise<void> {
+    await this.purgeAttr(id, 'gidnumber');
+  }
+
+  /**
    * POSIX extend (vendor idm_group_unix_extend: POST /v1/group/{id}/_unix
    * with GroupUnixExtend { gidnumber: Option<u32> }; the struct has no
    * skip_serializing_none, so None serializes as null).

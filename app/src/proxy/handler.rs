@@ -100,12 +100,20 @@ pub async fn proxy(State(state): State<AppState>, request: Request) -> Response 
         }
     };
 
+    // Kanidm's purge routes parse a JSON body even on DELETE. A bodyless
+    // DELETE (the console's attribute purge) sends [] as the client does.
+    let (body, content_type) = if method == Method::DELETE && body.is_empty() {
+        (Bytes::from_static(b"[]"), Some("application/json".to_string()))
+    } else {
+        let content_type = parts
+            .headers
+            .get(header::CONTENT_TYPE)
+            .and_then(|v| v.to_str().ok())
+            .map(str::to_string);
+        (body, content_type)
+    };
+
     // 5. Forward.
-    let content_type = parts
-        .headers
-        .get(header::CONTENT_TYPE)
-        .and_then(|v| v.to_str().ok())
-        .map(str::to_string);
     let forward_request = ForwardRequest {
         method: method.clone(),
         path_and_query: upstream_path,

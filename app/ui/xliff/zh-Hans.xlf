@@ -2813,6 +2813,26 @@
   <source>Go to home page</source>
   <target>转到主页</target>
 </trans-unit>
+<trans-unit id="sb989305820e424f7">
+  <source>GID number reset.</source>
+  <target state="needs-review-translation">GID 号已重置。</target>
+</trans-unit>
+<trans-unit id="sf5bc7e36327975bc">
+  <source>Failed to reset the GID number.</source>
+  <target state="needs-review-translation">重置 GID 号失败。</target>
+</trans-unit>
+<trans-unit id="s497350b789cdf831">
+  <source>Reset GID number</source>
+  <target state="needs-review-translation">重置 GID 号</target>
+</trans-unit>
+<trans-unit id="s255857544a9d5ec0">
+  <source>Reset</source>
+  <target state="needs-review-translation">重置</target>
+</trans-unit>
+<trans-unit id="s2aa0296b960c7add">
+  <source>Reset the GID number? Kanidm will generate a new one from the group, and anything using the old number stops matching.</source>
+  <target state="needs-review-translation">重置 GID 号？Kanidm 将根据该组生成新的 GID 号，所有使用旧号码的内容将不再匹配。</target>
+</trans-unit>
 </body>
 </file>
 </xliff>
