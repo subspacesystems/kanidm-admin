@@ -100,19 +100,22 @@ pub async fn proxy(State(state): State<AppState>, request: Request) -> Response 
         }
     };
 
-    let mut content_type = parts
+    let content_type = parts
         .headers
         .get(header::CONTENT_TYPE)
         .and_then(|v| v.to_str().ok())
         .map(str::to_string);
 
-    // Kanidm's attribute purge routes parse a JSON body even on DELETE;
-    // the vendored client sends an empty array. Normalize a bodyless
-    // DELETE so clearing an attribute does not fail with an empty-body
-    // parse error.
-    if method == Method::DELETE && body.is_empty() {
+    // Kanidm's attribute purge routes parse a JSON body even on DELETE.
+    // An empty body with a JSON content type fails before the purge
+    // handler; send the empty array the vendored client uses.
+    if method == Method::DELETE
+        && body.is_empty()
+        && content_type
+            .as_deref()
+            .is_some_and(|value| value.starts_with("application/json"))
+    {
         body = Bytes::from_static(b"[]");
-        content_type.get_or_insert_with(|| "application/json".to_string());
     }
 
     // 5. Forward.
