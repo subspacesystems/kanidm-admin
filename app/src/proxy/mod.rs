@@ -47,3 +47,8 @@ mod group_reset_gidnumber_integration;
 #[cfg(all(test, feature = "testcontainer", fork_test = "proxy_person_reset_gidnumber"))]
 #[path = "../../tests/proxy_person_reset_gidnumber/mod.rs"]
 mod person_reset_gidnumber_integration;
+
+// Service account gidnumber reset through the proxy; same setup as above.
+#[cfg(all(test, feature = "testcontainer", fork_test = "proxy_sa_reset_gidnumber"))]
+#[path = "../../tests/proxy_sa_reset_gidnumber/mod.rs"]
+mod sa_reset_gidnumber_integration;
