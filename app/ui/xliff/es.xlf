@@ -2961,6 +2961,22 @@
   <source>Schema attributes</source>
   <target state="needs-review-translation">Atributos del esquema</target>
 </trans-unit>
+<trans-unit id="s06a19edbe8b1506f">
+  <source>Application password deleted.</source>
+  <target state="needs-review-translation">Contraseña de aplicación eliminada.</target>
+</trans-unit>
+<trans-unit id="sa1c0210c23db66f8">
+  <source>Failed to delete the application password.</source>
+  <target state="needs-review-translation">No se pudo eliminar la contraseña de aplicación.</target>
+</trans-unit>
+<trans-unit id="secbd4ee0b84869d9">
+  <source>Delete the application password "<ph id="0">${this.deleteTarget.label}</ph>"? Anything using it stops signing in.</source>
+  <target state="needs-review-translation">¿Eliminar la contraseña de aplicación "<ph id="0">${this.deleteTarget.label}</ph>"? Todo lo que la use dejará de iniciar sesión.</target>
+</trans-unit>
+<trans-unit id="s9dc806212902ba8b">
+  <source>Delete application password <ph id="0">${password.label}</ph></source>
+  <target state="needs-review-translation">Eliminar contraseña de aplicación <ph id="0">${password.label}</ph></target>
+</trans-unit>
 </body>
 </file>
 </xliff>

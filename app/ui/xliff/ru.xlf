@@ -2961,6 +2961,22 @@
   <source>Schema attributes</source>
   <target state="needs-review-translation">Атрибуты схемы</target>
 </trans-unit>
+<trans-unit id="s06a19edbe8b1506f">
+  <source>Application password deleted.</source>
+  <target state="needs-review-translation">Пароль приложения удалён.</target>
+</trans-unit>
+<trans-unit id="sa1c0210c23db66f8">
+  <source>Failed to delete the application password.</source>
+  <target state="needs-review-translation">Не удалось удалить пароль приложения.</target>
+</trans-unit>
+<trans-unit id="secbd4ee0b84869d9">
+  <source>Delete the application password "<ph id="0">${this.deleteTarget.label}</ph>"? Anything using it stops signing in.</source>
+  <target state="needs-review-translation">Удалить пароль приложения "<ph id="0">${this.deleteTarget.label}</ph>"? Всё, что его использует, перестанет входить в систему.</target>
+</trans-unit>
+<trans-unit id="s9dc806212902ba8b">
+  <source>Delete application password <ph id="0">${password.label}</ph></source>
+  <target state="needs-review-translation">Удалить пароль приложения <ph id="0">${password.label}</ph></target>
+</trans-unit>
 </body>
 </file>
 </xliff>

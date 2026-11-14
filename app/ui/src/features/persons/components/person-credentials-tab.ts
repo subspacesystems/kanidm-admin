@@ -66,6 +66,9 @@ export class PersonCredentialsTab extends LitElement {
   @state() private mfaConfirm: string[] | null = null;
   @state() private mfaBusy = false;
   @state() private softlockBusy = false;
+  /** Application password pending a delete confirm. */
+  @state() private deleteTarget: PersonApplicationPassword | null = null;
+  @state() private deletingAppPassword = false;
 
   connectedCallback(): void {
     super.connectedCallback();
@@ -213,6 +216,35 @@ export class PersonCredentialsTab extends LitElement {
     }
   }
 
+  private closeDeleteAppPassword(): void {
+    if (!this.deletingAppPassword) {
+      this.deleteTarget = null;
+    }
+  }
+
+  /** Delete the application password pending a confirm (step-up required). */
+  private async handleDeleteAppPassword(): Promise<void> {
+    const target = this.deleteTarget;
+    if (!target) {
+      return;
+    }
+    this.deleteTarget = null;
+    this.deletingAppPassword = true;
+    try {
+      await authService.withStepUp(() =>
+        personService.deleteApplicationPassword(this.id, target.id)
+      );
+      notificationService.success(msg('Application password deleted.'));
+      await this.load();
+    } catch {
+      notificationService.error(
+        msg('Failed to delete the application password.')
+      );
+    } finally {
+      this.deletingAppPassword = false;
+    }
+  }
+
   /** Human text for CUStatus warnings that blocked the commit. */
   private mfaWarningText(warnings: string[]): string {
     if (warnings.includes('MfaRequired')) {
@@ -285,6 +317,25 @@ export class PersonCredentialsTab extends LitElement {
     `;
   }
 
+  private renderDeleteAppPasswordDialog() {
+    if (!this.deleteTarget) {
+      return nothing;
+    }
+    return html`
+      <confirm-dialog
+        .open=${true}
+        .busy=${this.deletingAppPassword}
+        .danger=${true}
+        .message=${msg(
+          str`Delete the application password "${this.deleteTarget.label}"? Anything using it stops signing in.`
+        )}
+        .confirmLabel=${msg('Delete')}
+        @cancel=${this.closeDeleteAppPassword}
+        @confirm=${() => void this.handleDeleteAppPassword()}
+      ></confirm-dialog>
+    `;
+  }
+
   private renderAppPasswordRow(password: PersonApplicationPassword) {
     return html`
       <li>
@@ -298,6 +349,13 @@ export class PersonCredentialsTab extends LitElement {
                 >${msg(str`Application: ${password.applicationName}`)}</span
               >
             </div>
+            <ui-button
+              size="sm"
+              variant="danger"
+              icon="trash"
+              .label=${msg(str`Delete application password ${password.label}`)}
+              @click=${() => (this.deleteTarget = password)}
+            ></ui-button>
           </div>
         </ui-card>
       </li>
@@ -507,6 +565,7 @@ export class PersonCredentialsTab extends LitElement {
       </section>
 
       ${this.renderEmailModal()} ${this.renderMfaConfirmDialog()}
+      ${this.renderDeleteAppPasswordDialog()}
     `;
   }
 

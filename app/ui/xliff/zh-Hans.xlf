@@ -2961,6 +2961,22 @@
   <source>Schema attributes</source>
   <target state="needs-review-translation">架构属性</target>
 </trans-unit>
+<trans-unit id="s06a19edbe8b1506f">
+  <source>Application password deleted.</source>
+  <target state="needs-review-translation">应用密码已删除。</target>
+</trans-unit>
+<trans-unit id="sa1c0210c23db66f8">
+  <source>Failed to delete the application password.</source>
+  <target state="needs-review-translation">删除应用密码失败。</target>
+</trans-unit>
+<trans-unit id="secbd4ee0b84869d9">
+  <source>Delete the application password "<ph id="0">${this.deleteTarget.label}</ph>"? Anything using it stops signing in.</source>
+  <target state="needs-review-translation">删除应用密码“<ph id="0">${this.deleteTarget.label}</ph>”？使用它的任何内容都将停止登录。</target>
+</trans-unit>
+<trans-unit id="s9dc806212902ba8b">
+  <source>Delete application password <ph id="0">${password.label}</ph></source>
+  <target state="needs-review-translation">删除应用密码 <ph id="0">${password.label}</ph></target>
+</trans-unit>
 </body>
 </file>
 </xliff>
