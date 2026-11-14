@@ -147,6 +147,20 @@ class DomainService {
   async removeImage(): Promise<void> {
     await apiFetch<void>(`${BASE}/domain/_image`, { method: 'DELETE' });
   }
+
+  /**
+   * Revoke a domain signing key by id (CLI `kanidm system domain revoke-key
+   * <key-id>`, vendor idm_domain_revoke_key: PUT
+   * /v1/domain/_attr/key_action_revoke). There is NO list-keys endpoint
+   * (CLI parity checked); the admin supplies the key id. Revoking signs out
+   * every user whose session was signed with the key.
+   */
+  async revokeKey(keyId: string): Promise<void> {
+    await apiFetch<void>(`${BASE}/domain/_attr/key_action_revoke`, {
+      method: 'PUT',
+      body: JSON.stringify([keyId]),
+    });
+  }
 }
 
 export const domainService = DomainService.getInstance();

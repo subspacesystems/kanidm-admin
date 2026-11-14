@@ -47,6 +47,11 @@ export class DomainPage extends LitElement {
   @state() private imageBusy = false;
   @state() private imageVersion = 0;
 
+  // Revoke-key state.
+  @state() private revokeKeyId = '';
+  @state() private revokeKeyOpen = false;
+  @state() private revokeBusy = false;
+
   private get imageUrl(): string {
     return `${DOMAIN_IMAGE_URL}?v=${this.imageVersion}`;
   }
@@ -189,6 +194,23 @@ export class DomainPage extends LitElement {
       this.toastError(error, msg('Failed to remove the domain image'));
     } finally {
       this.imageBusy = false;
+    }
+  }
+
+  private async revokeKey(): Promise<void> {
+    const keyId = this.revokeKeyId.trim();
+    if (!keyId || this.revokeBusy) return;
+    this.revokeBusy = true;
+    try {
+      await authService.withStepUp(() => domainService.revokeKey(keyId));
+      this.revokeKeyOpen = false;
+      this.revokeKeyId = '';
+      notificationService.success(msg('Domain key revoked.'));
+    } catch {
+      this.revokeKeyOpen = false;
+      notificationService.error(msg('Failed to revoke the domain key.'));
+    } finally {
+      this.revokeBusy = false;
     }
   }
 
@@ -406,6 +428,32 @@ export class DomainPage extends LitElement {
         </div>
       </ui-card>
 
+      <ui-card>
+        <h2>${msg('Revoke domain key')}</h2>
+        <p class="muted">
+          ${msg(
+            'Revokes a domain key by its id. Every session signed with it is invalidated, so all users must sign in again.'
+          )}
+        </p>
+        <form-field
+          fieldId="domain-revoke-key-id"
+          label=${msg('Key id')}
+          .value=${this.revokeKeyId}
+          @field-input=${(e: CustomEvent<{ value: string }>) => {
+            this.revokeKeyId = e.detail.value;
+          }}
+        ></form-field>
+        <div class="actions">
+          <ui-button
+            variant="danger"
+            ?disabled=${this.revokeKeyId.trim() === '' || this.revokeBusy}
+            @click=${() => (this.revokeKeyOpen = true)}
+          >
+            ${msg('Revoke key...')}
+          </ui-button>
+        </div>
+      </ui-card>
+
       ${this.basednConfirmOpen
         ? html`<confirm-dialog
             open
@@ -431,6 +479,19 @@ export class DomainPage extends LitElement {
             message=${msg('Remove the domain image?')}
             @confirm=${() => void this.removeImage()}
             @cancel=${() => (this.imageRemoveOpen = false)}
+          ></confirm-dialog>`
+        : nothing}
+      ${this.revokeKeyOpen
+        ? html`<confirm-dialog
+            open
+            danger
+            .busy=${this.revokeBusy}
+            confirmLabel=${msg('Revoke key')}
+            message=${msg(
+              'Revoke this domain key? All sessions signed with it are invalidated and cannot be restored.'
+            )}
+            @confirm=${() => void this.revokeKey()}
+            @cancel=${() => (this.revokeKeyOpen = false)}
           ></confirm-dialog>`
         : nothing}
     `;
