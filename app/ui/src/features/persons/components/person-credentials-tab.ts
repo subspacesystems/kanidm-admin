@@ -14,9 +14,14 @@ import '@/shared/components/ui-qr';
 import '@/shared/components/ui-empty-state';
 import '@/shared/components/ui-skeleton';
 import { kanidmStatusService } from '@/shared/services/kanidm-status.service';
+import {
+  applicationService,
+  type ApplicationSummary,
+} from '@/features/applications';
 import { personService } from '../services/person.service';
 import { buildResetUrl, qrDataUrl, qrPngBlob } from '../utils/reset-link';
 import type {
+  CreatedApplicationPassword,
   CredentialDetailType,
   CredentialUpdateStatusView,
   PersonApplicationPassword,
@@ -56,6 +61,14 @@ export class PersonCredentialsTab extends LitElement {
     type_: CredentialDetailType;
   }> = [];
   @state() private appPasswords: PersonApplicationPassword[] = [];
+  @state() private applications: ApplicationSummary[] = [];
+  @state() private appPasswordModalOpen = false;
+  @state() private appPasswordLabel = '';
+  @state() private appPasswordApplication = '';
+  @state() private appPasswordLabelError = '';
+  @state() private appPasswordApplicationError = '';
+  @state() private appPasswordBusy = false;
+  @state() private createdAppPassword: CreatedApplicationPassword | null = null;
   @state() private intentToken: string | null = null;
   @state() private kanidmUrl: string | null = null;
   @state() private qrOpen = false;
@@ -81,12 +94,14 @@ export class PersonCredentialsTab extends LitElement {
     }
     this.loading = true;
     try {
-      const [status, appPasswords] = await Promise.all([
+      const [status, appPasswords, applications] = await Promise.all([
         personService.credentialStatus(this.id),
         personService.applicationPasswords(this.id).catch(() => []),
+        applicationService.list().catch(() => []),
       ]);
       this.creds = status.creds ?? [];
       this.appPasswords = appPasswords;
+      this.applications = applications;
     } catch {
       notificationService.error(msg('Failed to load credential status.'));
     } finally {
@@ -235,7 +250,7 @@ export class PersonCredentialsTab extends LitElement {
         personService.deleteApplicationPassword(this.id, target.id)
       );
       notificationService.success(msg('Application password deleted.'));
-      await this.load();
+      await this.reloadAppPasswords();
     } catch {
       notificationService.error(
         msg('Failed to delete the application password.')
@@ -317,6 +332,172 @@ export class PersonCredentialsTab extends LitElement {
     `;
   }
 
+  private get applicationOptions(): { value: string; label: string }[] {
+    return this.applications.map((application) => ({
+      value: application.id,
+      label: application.displayName || application.name || application.id,
+    }));
+  }
+
+  private applicationLabel(id: string): string {
+    const application = this.applications.find((item) => item.id === id);
+    return application
+      ? application.displayName || application.name || application.id
+      : id;
+  }
+
+  private openCreateAppPassword(): void {
+    this.appPasswordLabel = '';
+    this.appPasswordApplication = '';
+    this.appPasswordLabelError = '';
+    this.appPasswordApplicationError = '';
+    this.createdAppPassword = null;
+    this.appPasswordModalOpen = true;
+  }
+
+  private closeCreateAppPassword(): void {
+    if (this.appPasswordBusy) {
+      return;
+    }
+    this.appPasswordModalOpen = false;
+    this.createdAppPassword = null;
+    this.appPasswordLabel = '';
+    this.appPasswordApplication = '';
+    this.appPasswordLabelError = '';
+    this.appPasswordApplicationError = '';
+  }
+
+  private handleAppPasswordSubmit(event: Event): void {
+    event.preventDefault();
+    void this.handleCreateAppPassword();
+  }
+
+  private async handleCreateAppPassword(): Promise<void> {
+    if (this.appPasswordBusy) {
+      return;
+    }
+    const label = this.appPasswordLabel.trim();
+    const applicationId = this.appPasswordApplication;
+    this.appPasswordLabelError = label ? '' : msg('Label is required.');
+    this.appPasswordApplicationError = applicationId
+      ? ''
+      : msg('Application is required.');
+    if (!label || !applicationId) {
+      return;
+    }
+    this.appPasswordBusy = true;
+    try {
+      const created = await authService.withStepUp(() =>
+        personService.createApplicationPassword(this.id, applicationId, label)
+      );
+      this.createdAppPassword = created;
+      await this.reloadAppPasswords();
+    } catch {
+      notificationService.error(
+        msg('Failed to create the application password.')
+      );
+    } finally {
+      this.appPasswordBusy = false;
+    }
+  }
+
+  private async reloadAppPasswords(): Promise<void> {
+    try {
+      this.appPasswords = await personService.applicationPasswords(this.id);
+    } catch {
+      // The change went through; keep the list the section already has.
+    }
+  }
+
+  private notifyAppPasswordCopied(): void {
+    notificationService.success(msg('Copied to clipboard.'));
+  }
+
+  private renderCreateAppPasswordDialog() {
+    const created = this.createdAppPassword;
+    return html`
+      <modal-dialog
+        heading=${msg('Create application password')}
+        .open=${this.appPasswordModalOpen}
+        .busy=${this.appPasswordBusy}
+        @modal-close=${this.closeCreateAppPassword}
+      >
+        ${created
+          ? html`
+              <p>
+                ${msg(
+                  'Application password created. Copy the secret now — it will not be shown again.'
+                )}
+              </p>
+              <p>${created.label}</p>
+              <p>${this.applicationLabel(this.appPasswordApplication)}</p>
+              <ui-copy-field
+                label=${msg('Secret')}
+                copy-label=${msg('Copy secret')}
+                .value=${created.secret}
+                @copied=${this.notifyAppPasswordCopied}
+                @copy-failed=${this.notifyCopyFailed}
+              ></ui-copy-field>
+            `
+          : html`
+              <form @submit=${this.handleAppPasswordSubmit}>
+                <form-field
+                  label=${msg('Label')}
+                  fieldId="app-password-label"
+                  type="text"
+                  required
+                  .value=${this.appPasswordLabel}
+                  .error=${this.appPasswordLabelError}
+                  @field-input=${(event: CustomEvent<{ value: string }>) =>
+                    (this.appPasswordLabel = event.detail.value)}
+                ></form-field>
+                <form-field
+                  label=${msg('Application')}
+                  fieldId="app-password-application"
+                  type="combobox"
+                  required
+                  .value=${this.appPasswordApplication}
+                  .options=${this.applicationOptions}
+                  .hint=${this.applications.length === 0
+                    ? msg('No applications available.')
+                    : ''}
+                  .error=${this.appPasswordApplicationError}
+                  @field-input=${(event: CustomEvent<{ value: string }>) =>
+                    (this.appPasswordApplication = event.detail.value)}
+                ></form-field>
+              </form>
+            `}
+        <div slot="footer">
+          ${created
+            ? html`
+                <ui-button
+                  variant="primary"
+                  @click=${this.closeCreateAppPassword}
+                >
+                  ${msg('Done')}
+                </ui-button>
+              `
+            : html`
+                <ui-button
+                  ?disabled=${this.appPasswordBusy}
+                  @click=${this.closeCreateAppPassword}
+                >
+                  ${msg('Cancel')}
+                </ui-button>
+                <ui-button
+                  variant="primary"
+                  ?loading=${this.appPasswordBusy}
+                  ?disabled=${this.applications.length === 0}
+                  @click=${this.handleCreateAppPassword}
+                >
+                  ${msg('Create')}
+                </ui-button>
+              `}
+        </div>
+      </modal-dialog>
+    `;
+  }
+
   private renderDeleteAppPasswordDialog() {
     if (!this.deleteTarget) {
       return nothing;
@@ -364,9 +545,12 @@ export class PersonCredentialsTab extends LitElement {
 
   private renderApplicationPasswords() {
     return html`
-      <div class="app-passwords-section">
-        <div class="app-passwords">
+      <div class="app-passwords">
+        <div class="app-passwords-header">
           <h3>${msg('Application passwords')}</h3>
+          <ui-button variant="primary" @click=${this.openCreateAppPassword}>
+            ${msg('Create application password')}
+          </ui-button>
         </div>
         ${this.appPasswords.length === 0
           ? html`<ui-empty-state icon="key"
@@ -567,6 +751,7 @@ export class PersonCredentialsTab extends LitElement {
       </section>
 
       ${this.renderEmailModal()} ${this.renderMfaConfirmDialog()}
+      ${this.renderCreateAppPasswordDialog()}
       ${this.renderDeleteAppPasswordDialog()}
     `;
   }

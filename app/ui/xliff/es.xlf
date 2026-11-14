@@ -2961,6 +2961,34 @@
   <source>Schema attributes</source>
   <target state="needs-review-translation">Atributos del esquema</target>
 </trans-unit>
+<trans-unit id="s1b992d748872ba9e">
+  <source>Application is required.</source>
+  <target state="needs-review-translation">Se requiere una aplicación.</target>
+</trans-unit>
+<trans-unit id="sdda2132b93b35197">
+  <source>Failed to create the application password.</source>
+  <target state="needs-review-translation">No se pudo crear la contraseña de aplicación.</target>
+</trans-unit>
+<trans-unit id="s54a0f5a42737ec70">
+  <source>Create application password</source>
+  <target state="needs-review-translation">Crear contraseña de aplicación</target>
+</trans-unit>
+<trans-unit id="s6cd7c714c8e8c886">
+  <source>Application password created. Copy the secret now — it will not be shown again.</source>
+  <target state="needs-review-translation">Se creó la contraseña de aplicación. Copie el secreto ahora; no se volverá a mostrar.</target>
+</trans-unit>
+<trans-unit id="s9025c40297775331">
+  <source>Secret</source>
+  <target state="needs-review-translation">Secreto</target>
+</trans-unit>
+<trans-unit id="sdf24432d9e3d49f0">
+  <source>Copy secret</source>
+  <target state="needs-review-translation">Copiar secreto</target>
+</trans-unit>
+<trans-unit id="sfba29380ce4afdd0">
+  <source>No applications available.</source>
+  <target state="needs-review-translation">No hay aplicaciones disponibles.</target>
+</trans-unit>
 <trans-unit id="s06a19edbe8b1506f">
   <source>Application password deleted.</source>
   <target state="needs-review-translation">Contraseña de aplicación eliminada.</target>

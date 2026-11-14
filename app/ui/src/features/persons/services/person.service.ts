@@ -8,6 +8,7 @@ import { entryBody, type KanidmEntry } from '@/shared/types/kanidm';
 import { applicationService } from '@/features/applications/services/application.service';
 import type {
   ApplicationPasswordRef,
+  CreatedApplicationPassword,
   CredentialStatusView,
   CredentialUpdateRequest,
   CredentialUpdateStatusView,
@@ -161,6 +162,31 @@ class PersonService {
       applicationId: ref.applicationUuid,
       applicationName: names.get(ref.applicationUuid) ?? ref.applicationUuid,
     }));
+  }
+
+  /**
+   * Create an application password (CLI `kanidm person application create`):
+   * POST /scim/v1/Person/{id}/Application/_create_password with the
+   * camelCase body. The reply carries the secret exactly once
+   * (vendor ScimApplicationPassword); never store or log it.
+   */
+  async createApplicationPassword(
+    id: string,
+    applicationId: string,
+    label: string
+  ): Promise<CreatedApplicationPassword> {
+    const reply = await apiFetch<{
+      uuid: string;
+      label: string;
+      secret: string;
+    }>(
+      `${SCIM_BASE}/Person/${encodeURIComponent(id)}/Application/_create_password`,
+      {
+        method: 'POST',
+        body: JSON.stringify({ applicationUuid: applicationId, label }),
+      }
+    );
+    return { id: reply.uuid, label: reply.label, secret: reply.secret };
   }
 
   /**
