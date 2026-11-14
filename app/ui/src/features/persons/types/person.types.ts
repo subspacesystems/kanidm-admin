@@ -55,6 +55,17 @@ export interface PersonApplicationPassword {
   applicationName: string;
 }
 
+/**
+ * Result of creating an application password (vendor
+ * `ScimApplicationPassword`): the password id, its label and the secret,
+ * which Kanidm returns only in the create reply.
+ */
+export interface CreatedApplicationPassword {
+  id: string;
+  label: string;
+  secret: string;
+}
+
 /** Map a v1 entry to the detail model. */
 export function toPersonDetail(entry: KanidmEntry): PersonDetail {
   return {

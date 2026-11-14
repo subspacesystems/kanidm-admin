@@ -3021,6 +3021,34 @@
   <source>Schema classes</source>
   <target state="needs-review-translation">Классы схемы</target>
 </trans-unit>
+<trans-unit id="s1b992d748872ba9e">
+  <source>Application is required.</source>
+  <target state="needs-review-translation">Требуется приложение.</target>
+</trans-unit>
+<trans-unit id="sdda2132b93b35197">
+  <source>Failed to create the application password.</source>
+  <target state="needs-review-translation">Не удалось создать пароль приложения.</target>
+</trans-unit>
+<trans-unit id="s54a0f5a42737ec70">
+  <source>Create application password</source>
+  <target state="needs-review-translation">Создать пароль приложения</target>
+</trans-unit>
+<trans-unit id="s6cd7c714c8e8c886">
+  <source>Application password created. Copy the secret now — it will not be shown again.</source>
+  <target state="needs-review-translation">Пароль приложения создан. Скопируйте секрет сейчас — он больше не будет показан.</target>
+</trans-unit>
+<trans-unit id="s9025c40297775331">
+  <source>Secret</source>
+  <target state="needs-review-translation">Секрет</target>
+</trans-unit>
+<trans-unit id="sdf24432d9e3d49f0">
+  <source>Copy secret</source>
+  <target state="needs-review-translation">Скопировать секрет</target>
+</trans-unit>
+<trans-unit id="sfba29380ce4afdd0">
+  <source>No applications available.</source>
+  <target state="needs-review-translation">Нет доступных приложений.</target>
+</trans-unit>
 </body>
 </file>
 </xliff>
