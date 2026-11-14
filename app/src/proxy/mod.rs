@@ -8,6 +8,7 @@ pub mod bulk;
 pub mod error_map;
 pub mod forwarder;
 pub mod handler;
+pub mod schema_fallback;
 
 // The integration tests drive the real testcontainer chain, so they
 // only exist when that subsystem is compiled in.
