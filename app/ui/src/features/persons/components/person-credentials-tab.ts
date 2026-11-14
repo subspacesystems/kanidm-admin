@@ -19,6 +19,7 @@ import { buildResetUrl, qrDataUrl, qrPngBlob } from '../utils/reset-link';
 import type {
   CredentialDetailType,
   CredentialUpdateStatusView,
+  PersonApplicationPassword,
 } from '../types/person.types';
 import { personCredentialsTabStyles } from './person-credentials-tab.styles';
 
@@ -54,6 +55,7 @@ export class PersonCredentialsTab extends LitElement {
     uuid: string;
     type_: CredentialDetailType;
   }> = [];
+  @state() private appPasswords: PersonApplicationPassword[] = [];
   @state() private intentToken: string | null = null;
   @state() private kanidmUrl: string | null = null;
   @state() private qrOpen = false;
@@ -76,8 +78,12 @@ export class PersonCredentialsTab extends LitElement {
     }
     this.loading = true;
     try {
-      const status = await personService.credentialStatus(this.id);
+      const [status, appPasswords] = await Promise.all([
+        personService.credentialStatus(this.id),
+        personService.applicationPasswords(this.id).catch(() => []),
+      ]);
       this.creds = status.creds ?? [];
+      this.appPasswords = appPasswords;
     } catch {
       notificationService.error(msg('Failed to load credential status.'));
     } finally {
@@ -279,6 +285,44 @@ export class PersonCredentialsTab extends LitElement {
     `;
   }
 
+  private renderAppPasswordRow(password: PersonApplicationPassword) {
+    return html`
+      <li>
+        <ui-card>
+          <div class="cred-row">
+            <div class="cred-main">
+              <span class="cred-type" title=${password.id}
+                >${password.label}</span
+              >
+              <span class="cred-uuid"
+                >${msg(str`Application: ${password.applicationName}`)}</span
+              >
+            </div>
+          </div>
+        </ui-card>
+      </li>
+    `;
+  }
+
+  private renderApplicationPasswords() {
+    return html`
+      <div class="app-passwords">
+        <h3>${msg('Application passwords')}</h3>
+        ${this.appPasswords.length === 0
+          ? html`<ui-empty-state icon="key"
+              >${msg('No application passwords.')}</ui-empty-state
+            >`
+          : html`
+              <ul class="cred-list">
+                ${this.appPasswords.map((password) =>
+                  this.renderAppPasswordRow(password)
+                )}
+              </ul>
+            `}
+      </div>
+    `;
+  }
+
   private renderCredRow(cred: { uuid: string; type_: CredentialDetailType }) {
     const hasTotp = this.totpLabelsOf(cred.type_).length > 0;
     return html`
@@ -459,6 +503,7 @@ export class PersonCredentialsTab extends LitElement {
                 ${this.creds.map((cred) => this.renderCredRow(cred))}
               </ul>
             `}
+        ${this.renderApplicationPasswords()}
       </section>
 
       ${this.renderEmailModal()} ${this.renderMfaConfirmDialog()}

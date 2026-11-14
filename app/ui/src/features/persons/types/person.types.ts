@@ -35,6 +35,26 @@ export function toPersonSummary(entry: KanidmEntry): PersonSummary {
   };
 }
 
+/**
+ * Wire shape of one `application_password` value on a SCIM person entry
+ * (vendor `ScimApplicationPasswordReference`): camelCase keys naming the
+ * password and the application it belongs to. The secret is never
+ * returned.
+ */
+export interface ApplicationPasswordRef {
+  uuid: string;
+  applicationUuid: string;
+  label: string;
+}
+
+/** Row model for a person's application passwords (read-only). */
+export interface PersonApplicationPassword {
+  id: string;
+  label: string;
+  applicationId: string;
+  applicationName: string;
+}
+
 /** Map a v1 entry to the detail model. */
 export function toPersonDetail(entry: KanidmEntry): PersonDetail {
   return {
