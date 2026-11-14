@@ -23,9 +23,12 @@ import { schemaAttributesPageStyles } from './schema-attributes-page.styles';
 export class SchemaAttributesPage extends LitElement {
   @state() private rows: SchemaAttribute[] = [];
   @state() private loading = true;
+  private initialFilter = '';
 
   connectedCallback(): void {
     super.connectedCallback();
+    this.initialFilter =
+      new URLSearchParams(window.location.search).get('filter') ?? '';
     void this.load();
   }
 
@@ -87,6 +90,7 @@ export class SchemaAttributesPage extends LitElement {
             .loading=${this.loading}
             .searchable=${true}
             .pageSize=${200}
+            .initialSearch=${this.initialFilter}
             .searchPlaceholder=${msg('Filter attributes...')}
             .emptyMessage=${msg('No attribute types found.')}
           ></data-table>

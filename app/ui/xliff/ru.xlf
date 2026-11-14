@@ -2961,6 +2961,66 @@
   <source>Schema attributes</source>
   <target state="needs-review-translation">Атрибуты схемы</target>
 </trans-unit>
+<trans-unit id="sc4228cab8024b7b2">
+  <source>Failed to load schema classes</source>
+  <target state="needs-review-translation">Не удалось загрузить классы схемы</target>
+</trans-unit>
+<trans-unit id="s1e187019b5262aa6">
+  <source>May</source>
+  <target state="needs-review-translation">Может</target>
+</trans-unit>
+<trans-unit id="se0fa6dae94535b88">
+  <source>Must</source>
+  <target state="needs-review-translation">Должен</target>
+</trans-unit>
+<trans-unit id="scc0a52423acf0343">
+  <source>Supplements</source>
+  <target state="needs-review-translation">Дополнения</target>
+</trans-unit>
+<trans-unit id="sed12f64f972ab18e">
+  <source>Excludes</source>
+  <target state="needs-review-translation">Исключения</target>
+</trans-unit>
+<trans-unit id="s832e00c194b5d69b">
+  <source>Back to classes</source>
+  <target state="needs-review-translation">Назад к классам</target>
+</trans-unit>
+<trans-unit id="s5867a1fbc93e1cb4">
+  <source>Class not found.</source>
+  <target state="needs-review-translation">Класс не найден.</target>
+</trans-unit>
+<trans-unit id="saa38b47ddc819fce">
+  <source>Attributes a class may have.</source>
+  <target state="needs-review-translation">Атрибуты, которые может иметь класс.</target>
+</trans-unit>
+<trans-unit id="s9d343efb359d6ea1">
+  <source>Attributes every entry of this class must have.</source>
+  <target state="needs-review-translation">Атрибуты, которые должна иметь каждая запись этого класса.</target>
+</trans-unit>
+<trans-unit id="s2c625216adb0d1e8">
+  <source>Classes added to every entry of this class.</source>
+  <target state="needs-review-translation">Классы, добавляемые к каждой записи этого класса.</target>
+</trans-unit>
+<trans-unit id="sf78b17bd3ca85d6c">
+  <source>Classes that cannot coexist with this class.</source>
+  <target state="needs-review-translation">Классы, которые не могут сосуществовать с этим классом.</target>
+</trans-unit>
+<trans-unit id="s58c7815714d30c73">
+  <source>Filter classes...</source>
+  <target state="needs-review-translation">Фильтр классов...</target>
+</trans-unit>
+<trans-unit id="se81c546fb3cccc30">
+  <source>No classes found.</source>
+  <target state="needs-review-translation">Классы не найдены.</target>
+</trans-unit>
+<trans-unit id="s675f4a26df9165ab">
+  <source>Browse the classes defined in Kanidm's schema.</source>
+  <target state="needs-review-translation">Просмотрите классы, определённые в схеме Kanidm.</target>
+</trans-unit>
+<trans-unit id="s103f038ba1b34e12">
+  <source>Schema classes</source>
+  <target state="needs-review-translation">Классы схемы</target>
+</trans-unit>
 </body>
 </file>
 </xliff>

@@ -3,7 +3,7 @@
 // are projected.
 
 import type { KanidmEntry } from '@/shared/types/kanidm';
-import { attrFirst } from '@/shared/types/kanidm';
+import { attrFirst, attrList } from '@/shared/types/kanidm';
 
 /** One attribute type from Kanidm's schema. */
 export interface SchemaAttribute {
@@ -12,6 +12,16 @@ export interface SchemaAttribute {
   multivalue: boolean;
   unique: boolean;
   description: string;
+}
+
+/** One class type from Kanidm's schema. */
+export interface SchemaClass {
+  name: string;
+  description: string;
+  systemmay: string[];
+  systemmust: string[];
+  systemsupplements: string[];
+  systemexcludes: string[];
 }
 
 /**
@@ -38,5 +48,21 @@ export function toSchemaAttribute(entry: KanidmEntry): SchemaAttribute {
     multivalue: flagTrue(attrs['multivalue']?.[0]),
     unique: flagTrue(attrs['unique']?.[0]),
     description: attrFirst(entry, 'description') ?? '',
+  };
+}
+
+function sortedList(entry: KanidmEntry, attr: string): string[] {
+  return [...attrList(entry, attr)].sort((a, b) => a.localeCompare(b));
+}
+
+/** Map a v1 schema entry to the class row. */
+export function toSchemaClass(entry: KanidmEntry): SchemaClass {
+  return {
+    name: attrFirst(entry, 'classname') ?? '',
+    description: attrFirst(entry, 'description') ?? '',
+    systemmay: sortedList(entry, 'systemmay'),
+    systemmust: sortedList(entry, 'systemmust'),
+    systemsupplements: sortedList(entry, 'systemsupplements'),
+    systemexcludes: sortedList(entry, 'systemexcludes'),
   };
 }

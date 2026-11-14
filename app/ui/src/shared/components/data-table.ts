@@ -34,6 +34,8 @@ export class DataTable extends LitElement {
   @property({ type: Boolean }) searchable = false;
   /** Already-localized search placeholder. */
   @property() searchPlaceholder = '';
+  /** Initial text to seed the search box with (e.g. from a query param). */
+  @property() initialSearch = '';
   /** Show the row-selection column and the bulk-delete bar. */
   @property({ type: Boolean }) selectable = false;
 
@@ -140,6 +142,14 @@ export class DataTable extends LitElement {
     column: TableColumn
   ): TemplateResult | string {
     return column.render ? column.render(row) : String(row[column.key] ?? '');
+  }
+
+  protected firstUpdated(changed: PropertyValues): void {
+    super.firstUpdated(changed);
+    if (this.initialSearch) {
+      this.searchTerm = this.initialSearch.toLowerCase();
+      this.page = 1;
+    }
   }
 
   protected updated(changed: PropertyValues): void {
