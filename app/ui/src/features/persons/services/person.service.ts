@@ -190,6 +190,20 @@ class PersonService {
   }
 
   /**
+   * Delete a person's application password (CLI
+   * `kanidm person application delete <id> <application_password_uuid>`).
+   */
+  async deleteApplicationPassword(
+    id: string,
+    passwordId: string
+  ): Promise<void> {
+    await apiFetch<void>(
+      `${SCIM_BASE}/Person/${encodeURIComponent(id)}/Application/${encodeURIComponent(passwordId)}`,
+      { method: 'DELETE' }
+    );
+  }
+
+  /**
    * Begin an admin credential-update session (vendor
    * idm_account_credential_update_begin): GET
    * /v1/person/{id}/_credential/_update -> (CUSessionToken, CUStatus),

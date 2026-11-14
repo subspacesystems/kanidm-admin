@@ -115,14 +115,19 @@ test.describe('person application passwords list', () => {
     // An application that is not in the list shows its id instead.
     await expect(page.getByText(unknownApp)).toBeVisible();
     await expect(page.getByText('No application passwords.')).toHaveCount(0);
-    // Read-only: no delete action in the section yet. Creating a password
-    // is a separate action; the page header's Delete removes the person.
+    // Each listed password has its own delete action in the section; the
+    // page header's Delete removes the person.
     const section = page.locator('.app-passwords');
     await expect(
       section.getByRole('heading', { name: 'Application passwords' })
     ).toBeVisible();
     await expect(
       section.getByRole('button', { name: /delete/i })
-    ).toHaveCount(0);
+    ).toHaveCount(2);
+    await expect(
+      section.getByRole('button', {
+        name: 'Delete application password laptop-mail',
+      })
+    ).toBeVisible();
   });
 });

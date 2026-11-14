@@ -158,6 +158,7 @@ export class PersonDetailPage extends LitElement {
                     class="btn-delete"
                     variant="danger-ghost"
                     icon="trash"
+                    .label=${msg('Delete person')}
                     ?disabled=${this.deleteBusy}
                     @click=${() => (this.deleteOpen = true)}
                   >
