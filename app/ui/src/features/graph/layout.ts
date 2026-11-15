@@ -62,14 +62,18 @@ export interface GraphLayout {
 
 /** `text` unchanged when it fits in `max` characters, else its first `max - 1` plus `…`. */
 export function truncateLabel(_text: string, _max?: number): string {
+  void _text;
+  void _max;
   throw new Error('not implemented');
 }
 
 /** Rank of every node by SPN. Cycles are broken (see the spec). */
 export function computeRanks(_data: GraphData): Map<string, number> {
+  void _data;
   throw new Error('not implemented');
 }
 
 export function layoutGraph(_data: GraphData): GraphLayout {
+  void _data;
   throw new Error('not implemented');
 }
