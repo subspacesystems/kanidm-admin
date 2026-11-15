@@ -16,3 +16,7 @@ export type {
   IdentifyResult,
   IdentifyState,
 } from './identity-verification.ts';
+
+// Side-effect import: registering the custom element when the feature
+// is imported.
+import './components/identify-user-page.ts';

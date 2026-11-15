@@ -3133,6 +3133,98 @@
   <target state="needs-review-translation">Texto</target>
   <source>Text</source>
 </trans-unit>
+<trans-unit id="s4a237a90267a56a6">
+  <source>Verify identity</source>
+  <target state="needs-review-translation">Verificar identidad</target>
+</trans-unit>
+<trans-unit id="saa30b009acb691dc">
+  <source>Identity verification is not available for this person.</source>
+  <target state="needs-review-translation">La verificación de identidad no está disponible para esta persona.</target>
+</trans-unit>
+<trans-unit id="s69e1f84d89ae0e74">
+  <source>Could not start identity verification.</source>
+  <target state="needs-review-translation">No se pudo iniciar la verificación de identidad.</target>
+</trans-unit>
+<trans-unit id="s1afdff065aaa9507">
+  <source>Could not submit the code.</source>
+  <target state="needs-review-translation">No se pudo enviar el código.</target>
+</trans-unit>
+<trans-unit id="s7f501865a3bd8d0a">
+  <source>Identity verification succeeded. You have verified <ph id="0">${flow.otherId}</ph> and they have verified you.</source>
+  <target state="needs-review-translation">La verificación de identidad se realizó correctamente. Has verificado a <ph id="0">${flow.otherId}</ph> y esa persona te ha verificado a ti.</target>
+</trans-unit>
+<trans-unit id="s8f639ef45410d2e0">
+  <source>The verification code is invalid. Check the code with the other person, and if it remains invalid, they may be trying to deceive you.</source>
+  <target state="needs-review-translation">El código de verificación no es válido. Comprueba el código con la otra persona y, si sigue sin ser válido, puede que esté intentando engañarte.</target>
+</trans-unit>
+<trans-unit id="s5c14c37be6c038a6">
+  <source>Identity verification was cancelled.</source>
+  <target state="needs-review-translation">La verificación de identidad se canceló.</target>
+</trans-unit>
+<trans-unit id="s11dda060040e0dac">
+  <source>Identity verification is in an unexpected state. Start over.</source>
+  <target state="needs-review-translation">La verificación de identidad está en un estado inesperado. Empezar de nuevo.</target>
+</trans-unit>
+<trans-unit id="s12d5ededd0d917b1">
+  <source>Other person's ID</source>
+  <target state="needs-review-translation">ID de la otra persona</target>
+</trans-unit>
+<trans-unit id="s396890a64d8737d6">
+  <source>Start verification</source>
+  <target state="needs-review-translation">Iniciar verificación</target>
+</trans-unit>
+<trans-unit id="sfd646e66d6c7a014">
+  <source>Their code</source>
+  <target state="needs-review-translation">Su código</target>
+</trans-unit>
+<trans-unit id="s3f5ff99f68b91fbf">
+  <source>5 or 6 digits.</source>
+  <target state="needs-review-translation">5 o 6 dígitos.</target>
+</trans-unit>
+<trans-unit id="s6e9540083ff0f78e">
+  <source>Submit code</source>
+  <target state="needs-review-translation">Enviar código</target>
+</trans-unit>
+<trans-unit id="s59f0f54f8add8235">
+  <source>Read this code to the other person.</source>
+  <target state="needs-review-translation">Lee este código a la otra persona.</target>
+</trans-unit>
+<trans-unit id="s54c09c7a0aa2ed1f">
+  <source>This code has expired.</source>
+  <target state="needs-review-translation">Este código ha caducado.</target>
+</trans-unit>
+<trans-unit id="sbf78bb8eba0bc1d9">
+  <source><ph id="0">${this.secondsLeft}</ph> seconds left</source>
+  <target state="needs-review-translation">Quedan <ph id="0">${this.secondsLeft}</ph> segundos</target>
+</trans-unit>
+<trans-unit id="sd00f607f8935d36a">
+  <source>Did <ph id="0">${flow.otherId}</ph> correctly verify your code? You won't be able to go back.</source>
+  <target state="needs-review-translation">¿<ph id="0">${flow.otherId}</ph> ha verificado correctamente tu código? No podrás volver atrás.</target>
+</trans-unit>
+<trans-unit id="sc8c680f488f2a7f1">
+  <source>Yes, they verified my code</source>
+  <target state="needs-review-translation">Sí, han verificado mi código</target>
+</trans-unit>
+<trans-unit id="s584f135e4325fcc2">
+  <source>No, they did not verify it</source>
+  <target state="needs-review-translation">No, no lo han verificado</target>
+</trans-unit>
+<trans-unit id="s338cca2d2f313247">
+  <source>Start over</source>
+  <target state="needs-review-translation">Empezar de nuevo</target>
+</trans-unit>
+<trans-unit id="sfc3205e66825f4a3">
+  <source>Your ID</source>
+  <target state="needs-review-translation">Tu ID</target>
+</trans-unit>
+<trans-unit id="s4f091ca844f5d261">
+  <source>Copy ID</source>
+  <target state="needs-review-translation">Copiar ID</target>
+</trans-unit>
+<trans-unit id="sbdfc8c1779edc7b0">
+  <source>Read it out when the other person asks for it.</source>
+  <target state="needs-review-translation">Léelo cuando la otra persona te lo pida.</target>
+</trans-unit>
 </body>
 </file>
 </xliff>

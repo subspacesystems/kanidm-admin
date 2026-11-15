@@ -3133,6 +3133,98 @@
   <target state="needs-review-translation">文本</target>
   <source>Text</source>
 </trans-unit>
+<trans-unit id="s4a237a90267a56a6">
+  <source>Verify identity</source>
+  <target state="needs-review-translation">验证身份</target>
+</trans-unit>
+<trans-unit id="saa30b009acb691dc">
+  <source>Identity verification is not available for this person.</source>
+  <target state="needs-review-translation">此人的身份验证不可用。</target>
+</trans-unit>
+<trans-unit id="s69e1f84d89ae0e74">
+  <source>Could not start identity verification.</source>
+  <target state="needs-review-translation">无法开始身份验证。</target>
+</trans-unit>
+<trans-unit id="s1afdff065aaa9507">
+  <source>Could not submit the code.</source>
+  <target state="needs-review-translation">无法提交验证码。</target>
+</trans-unit>
+<trans-unit id="s7f501865a3bd8d0a">
+  <source>Identity verification succeeded. You have verified <ph id="0">${flow.otherId}</ph> and they have verified you.</source>
+  <target state="needs-review-translation">身份验证成功。你已验证 <ph id="0">${flow.otherId}</ph>，对方也验证了你。</target>
+</trans-unit>
+<trans-unit id="s8f639ef45410d2e0">
+  <source>The verification code is invalid. Check the code with the other person, and if it remains invalid, they may be trying to deceive you.</source>
+  <target state="needs-review-translation">验证码无效。请与对方核对验证码；如果仍然无效，对方可能试图欺骗你。</target>
+</trans-unit>
+<trans-unit id="s5c14c37be6c038a6">
+  <source>Identity verification was cancelled.</source>
+  <target state="needs-review-translation">身份验证已取消。</target>
+</trans-unit>
+<trans-unit id="s11dda060040e0dac">
+  <source>Identity verification is in an unexpected state. Start over.</source>
+  <target state="needs-review-translation">身份验证处于意外状态。请重新开始。</target>
+</trans-unit>
+<trans-unit id="s12d5ededd0d917b1">
+  <source>Other person's ID</source>
+  <target state="needs-review-translation">对方的 ID</target>
+</trans-unit>
+<trans-unit id="s396890a64d8737d6">
+  <source>Start verification</source>
+  <target state="needs-review-translation">开始验证</target>
+</trans-unit>
+<trans-unit id="sfd646e66d6c7a014">
+  <source>Their code</source>
+  <target state="needs-review-translation">对方的验证码</target>
+</trans-unit>
+<trans-unit id="s3f5ff99f68b91fbf">
+  <source>5 or 6 digits.</source>
+  <target state="needs-review-translation">5 位或 6 位数字。</target>
+</trans-unit>
+<trans-unit id="s6e9540083ff0f78e">
+  <source>Submit code</source>
+  <target state="needs-review-translation">提交验证码</target>
+</trans-unit>
+<trans-unit id="s59f0f54f8add8235">
+  <source>Read this code to the other person.</source>
+  <target state="needs-review-translation">将此验证码读给对方听。</target>
+</trans-unit>
+<trans-unit id="s54c09c7a0aa2ed1f">
+  <source>This code has expired.</source>
+  <target state="needs-review-translation">此验证码已过期。</target>
+</trans-unit>
+<trans-unit id="sbf78bb8eba0bc1d9">
+  <source><ph id="0">${this.secondsLeft}</ph> seconds left</source>
+  <target state="needs-review-translation">剩余 <ph id="0">${this.secondsLeft}</ph> 秒</target>
+</trans-unit>
+<trans-unit id="sd00f607f8935d36a">
+  <source>Did <ph id="0">${flow.otherId}</ph> correctly verify your code? You won't be able to go back.</source>
+  <target state="needs-review-translation"><ph id="0">${flow.otherId}</ph> 是否正确验证了你的验证码？你将无法返回。</target>
+</trans-unit>
+<trans-unit id="sc8c680f488f2a7f1">
+  <source>Yes, they verified my code</source>
+  <target state="needs-review-translation">是的，对方验证了我的验证码</target>
+</trans-unit>
+<trans-unit id="s584f135e4325fcc2">
+  <source>No, they did not verify it</source>
+  <target state="needs-review-translation">不，对方没有验证</target>
+</trans-unit>
+<trans-unit id="s338cca2d2f313247">
+  <source>Start over</source>
+  <target state="needs-review-translation">重新开始</target>
+</trans-unit>
+<trans-unit id="sfc3205e66825f4a3">
+  <source>Your ID</source>
+  <target state="needs-review-translation">你的 ID</target>
+</trans-unit>
+<trans-unit id="s4f091ca844f5d261">
+  <source>Copy ID</source>
+  <target state="needs-review-translation">复制 ID</target>
+</trans-unit>
+<trans-unit id="sbdfc8c1779edc7b0">
+  <source>Read it out when the other person asks for it.</source>
+  <target state="needs-review-translation">当对方询问时读给他们听。</target>
+</trans-unit>
 </body>
 </file>
 </xliff>

@@ -111,7 +111,8 @@ export const sessionIndicatorStyles = css`
     font-size: 0.875rem;
   }
 
-  .sign-out {
+  .sign-out,
+  .identify {
     width: 100%;
     padding: 0.5rem 0.875rem;
     border: 1px solid var(--theme-color-border);
@@ -126,9 +127,18 @@ export const sessionIndicatorStyles = css`
       border-color 0.2s ease;
   }
 
+  .identify {
+    margin-bottom: 0.5rem;
+  }
+
   .sign-out:hover {
     color: var(--theme-color-error);
     border-color: var(--theme-color-error);
+  }
+
+  .identify:hover {
+    color: var(--theme-color-primary);
+    border-color: var(--theme-color-primary);
   }
 
   /* --- Guest mode --- */
