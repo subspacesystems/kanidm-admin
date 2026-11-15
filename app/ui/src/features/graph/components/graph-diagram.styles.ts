@@ -69,6 +69,22 @@ export const graphDiagramStyles = css`
   .legend-mark {
     display: block;
     flex: none;
+    width: 18px;
+    height: 12px;
+    border: 1px solid rgba(0, 0, 0, 0.25);
+    box-sizing: border-box;
+  }
+  .legend-ellipse {
+    border-radius: 50%;
+  }
+  .legend-box {
+    border-radius: 3px;
+  }
+  .legend-parallelogram {
+    clip-path: polygon(20% 0, 100% 0, 80% 100%, 0 100%);
+  }
+  .legend-hexagon {
+    clip-path: polygon(20% 0, 80% 0, 100% 50%, 80% 100%, 20% 100%, 0 50%);
   }
   .empty {
     margin: 0;

@@ -158,23 +158,10 @@ export class GraphDiagram extends LitElement {
           const style = NODE_STYLES[type];
           return html`
             <span class="legend-item">
-              <svg
-                class="legend-mark"
-                width="18"
-                height="12"
-                viewBox="0 0 18 12"
-                aria-hidden="true"
-              >
-                ${this.shape(
-                  style.shape,
-                  0,
-                  0,
-                  18,
-                  12,
-                  style.color,
-                  'legend-fill'
-                )}
-              </svg>
+              <span
+                class="legend-mark legend-${style.shape}"
+                style="background-color: ${style.color}"
+              ></span>
               ${this.typeLabel(type)}
             </span>
           `;
