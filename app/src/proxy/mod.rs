@@ -83,3 +83,8 @@ mod person_app_passwords_delete_integration;
 #[cfg(all(test, feature = "testcontainer", fork_test = "proxy_graph_data"))]
 #[path = "../../tests/proxy_graph_data/mod.rs"]
 mod graph_data_integration;
+
+// Identity verification (identify user) through the proxy; same setup as above.
+#[cfg(all(test, feature = "testcontainer", fork_test = "proxy_identify_user"))]
+#[path = "../../tests/proxy_identify_user/mod.rs"]
+mod identify_user_integration;
