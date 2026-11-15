@@ -284,6 +284,18 @@ export class SystemPage extends LitElement {
         </ui-card>
 
         <ui-card>
+          <h2>${msg('Graph')}</h2>
+          <p class="description">
+            ${msg(
+              'Draw how persons, service accounts and groups relate through group membership.'
+            )}
+          </p>
+          <a class="card-link" href="/admin/system/graph">
+            ${msg('Relationship graph')}
+          </a>
+        </ui-card>
+
+        <ui-card>
           <h2>${msg('Password badlist')}</h2>
           <p class="description">
             ${msg(
