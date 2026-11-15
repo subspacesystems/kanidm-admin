@@ -193,7 +193,10 @@ export function layoutGraph(data: GraphData): GraphLayout {
   });
 
   const layerCount = layers.size;
-  const widest = Math.max(0, ...[...layers.values()].map((layer) => layer.length));
+  const widest = Math.max(
+    0,
+    ...[...layers.values()].map((layer) => layer.length)
+  );
   const width =
     widest === 0
       ? 2 * MARGIN

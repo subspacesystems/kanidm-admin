@@ -48,6 +48,27 @@ export const graphPageStyles = css`
     margin-bottom: 16px;
     flex-wrap: wrap;
   }
+
+  .view-switch {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 12px;
+    font-size: 13px;
+    color: var(--theme-color-text-primary);
+  }
+  .view-option {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    cursor: pointer;
+    user-select: none;
+  }
+  .view-option input {
+    margin: 0;
+    accent-color: var(--theme-color-primary);
+  }
+
   .type-filter {
     display: flex;
     align-items: center;

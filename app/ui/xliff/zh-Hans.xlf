@@ -3117,6 +3117,22 @@
   <source>Relationship graph</source>
   <target state="needs-review-translation">关系图</target>
 </trans-unit>
+<trans-unit id="s414d9dc6fc96491b">
+  <target state="needs-review-translation">没有可绘制的对象。</target>
+  <source>No objects to draw.</source>
+</trans-unit>
+<trans-unit id="sbbf0027db3b1400a">
+  <target state="needs-review-translation">关系图示意图</target>
+  <source>Relationship graph diagram</source>
+</trans-unit>
+<trans-unit id="s7b576aa71acb36a6">
+  <target state="needs-review-translation">图表</target>
+  <source>Diagram</source>
+</trans-unit>
+<trans-unit id="s2492f5fb1b05b45e">
+  <target state="needs-review-translation">文本</target>
+  <source>Text</source>
+</trans-unit>
 </body>
 </file>
 </xliff>

@@ -3117,6 +3117,22 @@
   <source>Relationship graph</source>
   <target state="needs-review-translation">Grafo de relaciones</target>
 </trans-unit>
+<trans-unit id="s414d9dc6fc96491b">
+  <target state="needs-review-translation">No hay objetos para dibujar.</target>
+  <source>No objects to draw.</source>
+</trans-unit>
+<trans-unit id="sbbf0027db3b1400a">
+  <target state="needs-review-translation">Diagrama de grafo de relaciones</target>
+  <source>Relationship graph diagram</source>
+</trans-unit>
+<trans-unit id="s7b576aa71acb36a6">
+  <target state="needs-review-translation">Diagrama</target>
+  <source>Diagram</source>
+</trans-unit>
+<trans-unit id="s2492f5fb1b05b45e">
+  <target state="needs-review-translation">Texto</target>
+  <source>Text</source>
+</trans-unit>
 </body>
 </file>
 </xliff>
