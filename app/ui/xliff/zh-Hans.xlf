@@ -3069,6 +3069,70 @@
   <source>Delete person</source>
   <target state="needs-review-translation">删除人员</target>
 </trans-unit>
+<trans-unit id="sd92ffed89972e1e6">
+  <source>Failed to load the relationship graph</source>
+  <target state="needs-review-translation">无法加载关系图</target>
+</trans-unit>
+<trans-unit id="s40d76f1f51639ec0">
+  <source>Person</source>
+  <target state="needs-review-translation">人员</target>
+</trans-unit>
+<trans-unit id="s1a635369edaf4dc3">
+  <source>Service account</source>
+  <target state="needs-review-translation">服务账户</target>
+</trans-unit>
+<trans-unit id="s25e9248e65d537a6">
+  <source>Built-in group</source>
+  <target state="needs-review-translation">内置组</target>
+</trans-unit>
+<trans-unit id="sa3c9339de23c1752">
+  <source>Format</source>
+  <target state="needs-review-translation">格式</target>
+</trans-unit>
+<trans-unit id="s8607162f4ad19f4c">
+  <source>Graphviz</source>
+  <target state="needs-review-translation">Graphviz</target>
+</trans-unit>
+<trans-unit id="s45184a6e9d368e60">
+  <source>Mermaid</source>
+  <target state="needs-review-translation">Mermaid</target>
+</trans-unit>
+<trans-unit id="s168362a808c27325">
+  <source>Mermaid (ELK)</source>
+  <target state="needs-review-translation">Mermaid (ELK)</target>
+</trans-unit>
+<trans-unit id="s5c1cbd34fab8c4e8">
+  <source><ph id="0">${data.nodes.length}</ph> nodes, <ph id="1">${data.edges.length}</ph> edges</source>
+  <target state="needs-review-translation"><ph id="0">${data.nodes.length}</ph> 个节点，<ph id="1">${data.edges.length}</ph> 条边</target>
+</trans-unit>
+<trans-unit id="sef467f8fe7307be7">
+  <source>Graph</source>
+  <target state="needs-review-translation">图</target>
+</trans-unit>
+<trans-unit id="sf36c581f3aaedcbe">
+  <source>Draw how persons, service accounts and groups relate through group membership.</source>
+  <target state="needs-review-translation">展示人员、服务账户和组如何通过组成员关系相互关联。</target>
+</trans-unit>
+<trans-unit id="sffc64bd7ed255203">
+  <source>Relationship graph</source>
+  <target state="needs-review-translation">关系图</target>
+</trans-unit>
+<trans-unit id="s414d9dc6fc96491b">
+  <target state="needs-review-translation">没有可绘制的对象。</target>
+  <source>No objects to draw.</source>
+</trans-unit>
+<trans-unit id="sbbf0027db3b1400a">
+  <target state="needs-review-translation">关系图示意图</target>
+  <source>Relationship graph diagram</source>
+</trans-unit>
+<trans-unit id="s7b576aa71acb36a6">
+  <target state="needs-review-translation">图表</target>
+  <source>Diagram</source>
+</trans-unit>
+<trans-unit id="s2492f5fb1b05b45e">
+  <target state="needs-review-translation">文本</target>
+  <source>Text</source>
+</trans-unit>
 </body>
 </file>
 </xliff>
