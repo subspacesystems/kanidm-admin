@@ -8,6 +8,7 @@ import {
 } from '@/features/localization';
 import { notificationService } from '@/features/notifications';
 import { ThemeController, themeService } from '@/features/theme';
+import { navigate } from '@/shared/services/router.service';
 import { authService } from '../services/auth.service';
 import type { User } from '../types/auth.types';
 import '@/shared/components/avatar';
@@ -101,6 +102,11 @@ export class SessionIndicator extends LitElement {
   private async handleSignOut(): Promise<void> {
     await authService.signOut();
     window.location.assign('/');
+  }
+
+  private handleVerifyIdentity(): void {
+    this.menuOpen = false;
+    navigate('/admin/self/identify');
   }
 
   private formatRemaining(ms: number): string {
@@ -206,7 +212,7 @@ export class SessionIndicator extends LitElement {
           type="button"
           aria-haspopup="menu"
           aria-expanded=${this.menuOpen || this.drawerOpen ? 'true' : 'false'}
-          aria-label=${this.user ? this.avatarName : msg('Settings')}
+          aria-label=${this.user ? msg('Session menu') : msg('Settings')}
           @click=${this.handleTriggerClick}
         >
           ${countdown}
@@ -244,6 +250,13 @@ export class SessionIndicator extends LitElement {
             : nothing}
         </div>
         <div class="divider"></div>
+        <button
+          class="identify"
+          role="menuitem"
+          @click=${this.handleVerifyIdentity}
+        >
+          ${msg('Verify identity')}
+        </button>
         <button class="sign-out" role="menuitem" @click=${this.handleSignOut}>
           ${msg('Sign Out')}
         </button>

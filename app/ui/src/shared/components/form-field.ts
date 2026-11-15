@@ -29,6 +29,10 @@ export class FormField extends LitElement {
   @property() error = '';
   /** Already-localized hint below the control. */
   @property() hint = '';
+  /** inputmode attribute of the inner input (e.g. "numeric"). */
+  @property() inputMode = '';
+  /** autocomplete attribute of the inner input. */
+  @property() autocomplete = '';
 
   @state() private open = false;
   @state() private activeIndex = -1;
@@ -316,6 +320,8 @@ export class FormField extends LitElement {
           type=${this.type}
           .value=${this.value}
           placeholder=${this.placeholder}
+          inputmode=${this.inputMode || nothing}
+          autocomplete=${this.autocomplete || nothing}
           ?disabled=${this.disabled}
           ?required=${this.required}
           @input=${this.handleInput}

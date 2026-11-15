@@ -33,6 +33,7 @@ import '@/features/domain/components/domain-page';
 import '@/features/system/components/system-page';
 import '@/features/schema';
 import '@/features/graph';
+import '@/features/identity';
 import '@/features/applications/components/application-list-page';
 import '@/features/sync/components/sync-list-page';
 import '@/features/sync/components/sync-detail-page';
@@ -127,6 +128,11 @@ export class AppComponent extends LitElement {
       path: '/admin/domain',
       render: () => html`<domain-page></domain-page>`,
       enter: async () => this.guardSection('domain'),
+    },
+    {
+      path: '/admin/self/identify',
+      render: () => html`<identify-user-page></identify-user-page>`,
+      enter: async () => this.guardAdmin(),
     },
     {
       path: '/admin/system',
