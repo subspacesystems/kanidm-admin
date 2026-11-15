@@ -78,3 +78,8 @@ mod person_app_passwords_create_integration;
 #[cfg(all(test, feature = "testcontainer", fork_test = "proxy_person_app_passwords_delete"))]
 #[path = "../../tests/proxy_person_app_passwords_delete/mod.rs"]
 mod person_app_passwords_delete_integration;
+
+// Graph data (person, service account and group lists) through the proxy; same setup as above.
+#[cfg(all(test, feature = "testcontainer", fork_test = "proxy_graph_data"))]
+#[path = "../../tests/proxy_graph_data/mod.rs"]
+mod graph_data_integration;
