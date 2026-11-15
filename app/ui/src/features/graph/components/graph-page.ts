@@ -22,6 +22,7 @@ import {
   type GraphNodeType,
 } from '../graph';
 import { graphService } from '../services/graph.service';
+import './graph-diagram';
 import { graphPageStyles } from './graph-page.styles';
 
 @customElement('graph-page')
@@ -34,6 +35,7 @@ export class GraphPage extends LitElement {
   };
   @state() private types: GraphNodeType[] = [...GRAPH_NODE_TYPES];
   @state() private format: GraphFormat = 'graphviz';
+  @state() private view: 'text' | 'diagram' = 'text';
   @state() private loading = true;
 
   connectedCallback(): void {
@@ -142,37 +144,65 @@ export class GraphPage extends LitElement {
               />
               ${msg('Built-in group')}
             </label>
-            <label class="format-filter">
-              ${msg('Format')}
-              <select
-                .value=${this.format}
-                @change=${(e: Event) =>
-                  (this.format = (e.target as HTMLSelectElement)
-                    .value as GraphFormat)}
-              >
-                <option value="graphviz">${msg('Graphviz')}</option>
-                <option value="mermaid">${msg('Mermaid')}</option>
-                <option value="mermaid-elk">${msg('Mermaid (ELK)')}</option>
-              </select>
-            </label>
+            ${this.view === 'text'
+              ? html`<label class="format-filter">
+                  ${msg('Format')}
+                  <select
+                    .value=${this.format}
+                    @change=${(e: Event) =>
+                      (this.format = (e.target as HTMLSelectElement)
+                        .value as GraphFormat)}
+                  >
+                    <option value="graphviz">${msg('Graphviz')}</option>
+                    <option value="mermaid">${msg('Mermaid')}</option>
+                    <option value="mermaid-elk">${msg('Mermaid (ELK)')}</option>
+                  </select>
+                </label>`
+              : ''}
           </div>
 
           ${this.loading
             ? html`<p class="muted">${msg('Loading...')}</p>`
             : html`
+                <div class="view-switch" role="group">
+                  <label class="view-option">
+                    <input
+                      type="radio"
+                      name="graph-view"
+                      value="diagram"
+                      .checked=${this.view === 'diagram'}
+                      @change=${() => (this.view = 'diagram')}
+                    />
+                    ${msg('Diagram')}
+                  </label>
+                  <label class="view-option">
+                    <input
+                      type="radio"
+                      name="graph-view"
+                      value="text"
+                      .checked=${this.view === 'text'}
+                      @change=${() => (this.view = 'text')}
+                    />
+                    ${msg('Text')}
+                  </label>
+                </div>
                 <div class="output-head">
                   <p class="meta">
                     ${msg(
                       str`${data.nodes.length} nodes, ${data.edges.length} edges`
                     )}
                   </p>
-                  <ui-button icon="copy" @click=${this.copy}>
-                    ${msg('Copy')}
-                  </ui-button>
+                  ${this.view === 'text'
+                    ? html`<ui-button icon="copy" @click=${this.copy}>
+                        ${msg('Copy')}
+                      </ui-button>`
+                    : ''}
                 </div>
-                <pre class="graph-output">
+                ${this.view === 'text'
+                  ? html`<pre class="graph-output">
 ${renderGraph(data, this.format)}</pre
-                >
+                    >`
+                  : html`<graph-diagram .data=${data}></graph-diagram>`}
               `}
         </ui-card>
       </admin-layout>
